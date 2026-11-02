@@ -991,12 +991,11 @@
 
       <!-- Categories Scroll -->
       <nav class="category-pills" id="category-pills">
-        <button class="pill-btn active" data-category="all">✨ All Dishes</button>
-        <button class="pill-btn" data-category="kebabs">🍢 Turkish Kebabs & Platters</button>
-        <button class="pill-btn" data-category="mandi">🍚 Arabian Mandi & Biryani</button>
+        <button class="pill-btn active" data-category="all">✨ All Dishes (15)</button>
+        <button class="pill-btn" data-category="mandi">🍚 Arabian Mandi & Feasts</button>
+        <button class="pill-btn" data-category="kebabs">🍢 Kebabs, Platters & Seafood</button>
         <button class="pill-btn" data-category="curries">🍲 Royal Gravies</button>
-        <button class="pill-btn" data-category="breads">🫓 Artisanal Breads</button>
-        <button class="pill-btn" data-category="desserts">🍯 Desserts & Drinks</button>
+        <button class="pill-btn" data-category="desserts">🍯 Turkish Desserts</button>
       </nav>
     </div>
   </section>
@@ -1085,194 +1084,192 @@
     // Images map to files inside the "images/" folder.
     // -------------------------------------------------------------
     const MENU_DATA = [
-      // Category 1: Turkish Kebabs & Platters
+      // Category: Mandi & Biryani
       {
-        id: "tz-01",
-        name: "Grand Turkish Mixed Grill Platter",
-        category: "kebabs",
+        id: "tz-alfaham-mandi",
+        name: "Chicken Alfaham Mandi (Family Feast)",
+        category: "mandi",
         diet: "nonveg",
-        price: 899,
-        portion: "Serves 3 - 4 Persons",
+        price: 950,
+        portion: "Serves 4 Persons",
         bestseller: true,
-        image: "images/grand_turkish_platter.jpg",
-        desc: "A royal feast of succulent Adana Kebab, Tavuk Shish, Lamb Beyti & charred tomatoes, served over spiced saffron rice with Turkish garlic yogurt sauce.",
-        tags: ["Chef's Signature", "Charcoal Grilled", "Spicy Garlic Dip"]
+        image: "images/chicken_alfaham_mandi_950_4person.jpg",
+        desc: "Arabian charcoal-grilled succulent Alfaham chicken served over a giant platter of aromatic Mandi rice with spicy Dakous salsa and garlic toum.",
+        tags: ["Family Platter", "Serves 4", "Charcoal Alfaham", "Signature Mandi"]
       },
       {
-        id: "tz-02",
-        name: "Authentic Lamb Adana Kebab",
+        id: "tz-mutton-mandi",
+        name: "Royal Mutton Mandi (Family Pack)",
+        category: "mandi",
+        diet: "nonveg",
+        price: 1500,
+        portion: "Serves 4 Persons",
+        bestseller: true,
+        image: "images/mutton_mandi_1500_4person.jpg",
+        desc: "Tender, juicy pit-cooked baby lamb shanks melting off the bone, served over aromatic Yemeni spiced basmati rice with fried nuts.",
+        tags: ["Royal Feast", "Serves 4", "Tender Lamb", "Must Try"]
+      },
+      {
+        id: "tz-mutton-platter-mandi",
+        name: "Grand Mutton Platter Mandi (King Size)",
+        category: "mandi",
+        diet: "nonveg",
+        price: 1900,
+        portion: "Serves 4 - 5 Persons",
+        bestseller: true,
+        image: "images/mutton_platter_mandi_1900.jpg",
+        desc: "The ultimate Zaika celebration feast! An opulent giant platter combining mutton kebabs, braised shanks, and Mandi rice garnished with roasted cashews.",
+        tags: ["King Size Feast", "Serves 4-5", "Celebration Special"]
+      },
+
+      // Category: Turkish Kebabs, Platters & Seafood
+      {
+        id: "tz-chicken-platter",
+        name: "Chicken Turkish Platter (Half)",
+        category: "kebabs",
+        diet: "nonveg",
+        price: 550,
+        portion: "Serves 2 - 3 Persons",
+        bestseller: true,
+        image: "images/chicken_turkish_platter_half_550.jpg",
+        desc: "Royal barbecue platter featuring assorted chicken kebabs, Tavuk Shish, grilled tomatoes, spicy mint dip, and Turkish flatbread.",
+        tags: ["Chef's Choice", "Serves 2-3", "Assorted Kebabs"]
+      },
+      {
+        id: "tz-mutton-platter",
+        name: "Royal Mutton Platter (Half)",
+        category: "kebabs",
+        diet: "nonveg",
+        price: 790,
+        portion: "Serves 2 - 3 Persons",
+        bestseller: true,
+        image: "images/mutton_platter_half_790.jpg",
+        desc: "Premium lamb cuts, charcoal-grilled mutton seekh kebabs, spiced boti and sumac onions served sizzling hot.",
+        tags: ["Chef's Signature", "Serves 2-3", "Charcoal Grill"]
+      },
+      {
+        id: "tz-indian-chicken-platter",
+        name: "Indian Chicken Tandoori Platter (Half)",
+        category: "kebabs",
+        diet: "nonveg",
+        price: 590,
+        portion: "Serves 2 - 3 Persons",
+        bestseller: false,
+        image: "images/indian_chicken_platter_half_590.jpg",
+        desc: "A sizzling platter of classic tandoori chicken, malai chicken tikka, and reshmi kebabs served with onion rings and mint dip.",
+        tags: ["Tandoori Feast", "Serves 2-3", "Clay Oven"]
+      },
+      {
+        id: "tz-mutton-tikka",
+        name: "Authentic Turkish Mutton Tikka",
         category: "kebabs",
         diet: "nonveg",
         price: 460,
         portion: "Serves 1 - 2 Persons",
         bestseller: true,
-        image: "images/adana_kebab.jpg",
-        desc: "Minced mountain lamb hand-kneaded with red bell peppers, sumac and Turkish spices, grilled over natural lump charcoal.",
-        tags: ["Smoky Charcoal", "Mildly Spiced", "Sumac Onions"]
+        image: "images/turkish_mutton_tikka.jpg",
+        desc: "Prime cuts of boneless mutton marinated with Turkish olive oil, cracked black pepper, oregano and sumac, grilled over live charcoal.",
+        tags: ["Authentic Turkish", "Prime Lamb", "Charcoal Fired"]
       },
       {
-        id: "tz-03",
-        name: "Tavuk Shish (Turkish Chicken Skewers)",
+        id: "tz-fish-tikka",
+        name: "Boneless Fish Tikka",
         category: "kebabs",
         diet: "nonveg",
-        price: 360,
+        price: 350,
         portion: "Serves 1 - 2 Persons",
-        bestseller: false,
-        image: "images/tavuk_shish.jpg",
-        desc: "Tender chicken breast chunks marinated in strained Turkish yogurt, Aleppo pepper, olive oil and grilled to juicy perfection.",
-        tags: ["High Protein", "Juicy & Tender", "Yogurt Marinade"]
+        bestseller: true,
+        image: "images/boneless_fish_tikka_350.jpg",
+        desc: "Fresh tender boneless fish chunks marinated in mustard oil, ajwain and Kashmiri red chilies, skewered and chargrilled.",
+        tags: ["Chef's Special", "Charcoal Grilled", "Rich Spices"]
       },
       {
-        id: "tz-04",
-        name: "Turkish Paneer Tikka Shish",
+        id: "tz-turkish-fish",
+        name: "Boneless Turkish Fish",
         category: "kebabs",
-        diet: "veg",
+        diet: "nonveg",
+        price: 350,
+        portion: "Serves 1 - 2 Persons",
+        bestseller: false,
+        image: "images/boneless_turkish_fish_350.jpg",
+        desc: "Authentic Turkish style grilled fish fillet seasoned with Mediterranean herb rub, sumac, garlic butter and fresh lemon juice.",
+        tags: ["Authentic Turkish", "Herb Butter", "Mild & Tangy"]
+      },
+      {
+        id: "tz-fish-finger",
+        name: "Crispy Golden Fish Fingers",
+        category: "kebabs",
+        diet: "nonveg",
         price: 320,
         portion: "Serves 1 - 2 Persons",
         bestseller: false,
-        image: "images/turkish_paneer_shish.jpg",
-        desc: "Fresh cottage cheese cubes marinated in Zaika special herb rub, roasted with bell peppers and drizzled with pomegranate molasses.",
-        tags: ["Pure Veg", "Pomegranate Glaze", "Clay Oven"]
+        image: "images/fish_finger.jpg",
+        desc: "Crispy crumbed boneless fish batons seasoned with herbs, served with house special Turkish garlic dip and lime wedge.",
+        tags: ["Crispy Crunch", "Seafood Delight", "Garlic Dip"]
       },
-
-      // Category 2: Arabian Mandi & Biryani
       {
-        id: "tz-05",
-        name: "Royal Mutton Arabian Mandi",
-        category: "mandi",
+        id: "tz-prawns-cheese-garlic",
+        name: "Prawns Cheese Garlic",
+        category: "kebabs",
         diet: "nonveg",
-        price: 780,
-        portion: "Serves 2 - 3 Persons",
+        price: 350,
+        portion: "Serves 1 - 2 Persons",
         bestseller: true,
-        image: "images/mutton_arabian_mandi.jpg",
-        desc: "Slow pit-cooked tender baby lamb shank resting over fragrant basmati rice infused with whole dried limes, cardamom, and toasted almonds.",
-        tags: ["Pit Cooked", "Nutty Fragrance", "Authentic Arabian"]
+        image: "images/prawns_cheese_garlic_350.jpg",
+        desc: "Jumbo sea prawns sautéed with roasted garlic butter, white pepper, and gratinated under golden melted cheese.",
+        tags: ["Melted Cheese", "Garlic Butter", "Jumbo Prawns"]
       },
       {
-        id: "tz-06",
-        name: "Chicken Turkish Zaika Mandi",
-        category: "mandi",
+        id: "tz-prawns-tandoori",
+        name: "Tandoori Spiced Prawns",
+        category: "kebabs",
         diet: "nonveg",
-        price: 490,
-        portion: "Serves 2 Persons",
-        bestseller: true,
-        image: "images/chicken_turkish_mandi.jpg",
-        desc: "A whole crisp-roasted spring chicken served atop steaming Mandi rice with spicy tomato Dakous dip and mint yogurt.",
-        tags: ["Crispy Skin", "Dakous Sauce", "Full Meal"]
-      },
-      {
-        id: "tz-07",
-        name: "Solapur Zaika Dum Biryani",
-        category: "mandi",
-        diet: "nonveg",
-        price: 380,
+        price: 350,
         portion: "Serves 1 - 2 Persons",
         bestseller: false,
-        image: "images/solapur_dum_biryani.jpg",
-        desc: "Solapur style rich spiced long-grain biryani sealed and slow-cooked in handi with caramelized onions, saffron and fresh herbs.",
-        tags: ["Handi Dum", "Locally Loved", "Spicy"]
-      },
-
-      // Category 3: Royal Gravies & Curries
-      {
-        id: "tz-08",
-        name: "Turkish Chicken Stew (Tavuk Guvec)",
-        category: "curries",
-        diet: "nonveg",
-        price: 390,
-        portion: "Serves 2 Persons",
-        bestseller: false,
-        image: "images/turkish_chicken_guvec.jpg",
-        desc: "Traditional earthenware clay pot stew with boneless chicken, sweet bell peppers, roasted garlic and rich tomato glaze.",
-        tags: ["Clay Pot Simmered", "Rich Gravy", "Mild"]
+        image: "images/prawns_tandoori_350.jpg",
+        desc: "Plump fresh prawns marinated in authentic ajwain-tandoori spice blend, skewered and fired in clay oven.",
+        tags: ["Clay Oven", "Smoky & Spicy", "Fresh Seafood"]
       },
       {
-        id: "tz-09",
-        name: "Royal Mutton Rogan Josh",
-        category: "curries",
-        diet: "nonveg",
-        price: 480,
-        portion: "Serves 2 Persons",
-        bestseller: true,
-        image: "images/mutton_rogan_josh.jpg",
-        desc: "Slow-braised tender lamb simmered in aromatic Kashmiri chilies, mace, fennel seed powder and saffron essence.",
-        tags: ["Rich Aroma", "Tender Cuts", "Signature Curry"]
-      },
-      {
-        id: "tz-10",
-        name: "Paneer Lababdar Zaika Special",
-        category: "curries",
-        diet: "veg",
-        price: 330,
-        portion: "Serves 2 Persons",
-        bestseller: false,
-        image: "images/paneer_lababdar.jpg",
-        desc: "Crumbled and diced paneer cooked in a creamy tomato-cashew reduction garnished with fresh coriander and ginger juliennes.",
-        tags: ["Pure Veg", "Cashew Cream", "Medium Spicy"]
-      },
-
-      // Category 4: Artisanal Breads
-      {
-        id: "tz-11",
-        name: "Authentic Turkish Pide Flatbread",
-        category: "breads",
+        id: "tz-chana-garlic",
+        name: "Crispy Chana Garlic",
+        category: "kebabs",
         diet: "veg",
         price: 180,
         portion: "Serves 1 - 2 Persons",
-        bestseller: true,
-        image: "images/turkish_pide_bread.jpg",
-        desc: "Boat-shaped traditional Turkish sourdough flatbread baked with molten mozzarella, feta cheese, and nigella seeds.",
-        tags: ["Wood Fired", "Cheese Stuffed", "Sourdough"]
-      },
-      {
-        id: "tz-12",
-        name: "Garlic Butter Zaika Naan",
-        category: "breads",
-        diet: "veg",
-        price: 80,
-        portion: "Serves 1 Person",
         bestseller: false,
-        image: "images/garlic_butter_naan.jpg",
-        desc: "Tandoor baked refined flour bread brushed with molten pure ghee and roasted crushed garlic cloves.",
-        tags: ["Crispy & Soft", "Garlic Butter"]
+        image: "images/chana_garlic.jpg",
+        desc: "Golden fried kabuli chana tossed with crisp burnt garlic flakes, chatpata masala, and fresh coriander.",
+        tags: ["Pure Veg", "Crispy Starter", "Garlic Crunch"]
       },
 
-      // Category 5: Desserts & Beverages
+      // Category: Royal Gravies & Curries
       {
-        id: "tz-13",
-        name: "Pistachio Turkish Baklava (4 Pcs)",
-        category: "desserts",
-        diet: "veg",
-        price: 260,
-        portion: "Serves 1 - 2 Persons",
-        bestseller: true,
-        image: "images/turkish_baklava.jpg",
-        desc: "40 delicate layers of buttery filo pastry packed with crushed Antep pistachios and drenched in light rose-citrus syrup.",
-        tags: ["Antep Pistachio", "Flaky Filo", "Royal Dessert"]
-      },
-      {
-        id: "tz-14",
-        name: "Warm Cheese Kunafa with Ice Cream",
-        category: "desserts",
-        diet: "veg",
-        price: 290,
+        id: "tz-dum-murga",
+        name: "Royal Dum Murga Gravy",
+        category: "curries",
+        diet: "nonveg",
+        price: 420,
         portion: "Serves 2 Persons",
         bestseller: true,
-        image: "images/cheese_kunafa.jpg",
-        desc: "Golden spun kataifi pastry filled with stretchy sweet cheese, baked crispy and topped with vanilla bean ice cream.",
-        tags: ["Hot & Cold", "Gooey Cheese", "Must Try"]
+        image: "images/dum_murga.jpg",
+        desc: "Whole chicken pieces slow-steamed under sealed handi dum in rich almond-onion brown gravy and whole royal spices.",
+        tags: ["Handi Dum", "Rich Gravy", "Solapur Special"]
       },
+
+      // Category: Desserts & Sweets
       {
-        id: "tz-15",
-        name: "Traditional Turkish Mint Tea (Cay)",
+        id: "tz-kunafa",
+        name: "Turkish Royal Cheese Kunafa",
         category: "desserts",
         diet: "veg",
-        price: 90,
-        portion: "1 Tulip Glass",
-        bestseller: false,
-        image: "images/turkish_mint_tea.jpg",
-        desc: "Double-brewed Black Sea tea served in a traditional curved tulip glass with fresh spearmint leaves and beet sugar.",
-        tags: ["Digestive", "Authentic Turkish", "Refreshing"]
+        price: 200,
+        portion: "Serves 1 - 2 Persons",
+        bestseller: true,
+        image: "images/kunafa_desert_200.jpg",
+        desc: "Crisp, golden buttery kataifi pastry woven over gooey sweet melted cheese, drenched in aromatic saffron-cardamom sugar syrup.",
+        tags: ["Authentic Dessert", "Melted Cheese", "Pistachio Garnish"]
       }
     ];
 
@@ -1348,11 +1345,10 @@
       // Group by Category if viewing "All"
       let html = "";
       const categories = [
-        { id: "kebabs", title: "🍢 Turkish Kebabs & Platters" },
-        { id: "mandi", title: "🍚 Arabian Mandi & Dum Biryani" },
-        { id: "curries", title: "🍲 Royal Gravies & Curries" },
-        { id: "breads", title: "🫓 Artisanal Flatbreads & Naan" },
-        { id: "desserts", title: "🍯 Turkish Desserts & Beverages" }
+        { id: "mandi", title: "🍚 Arabian Mandi & Feasts" },
+        { id: "kebabs", title: "🍢 Kebabs, Platters & Seafood" },
+        { id: "curries", title: "🍲 Royal Gravies" },
+        { id: "desserts", title: "🍯 Turkish Desserts" }
       ];
 
       categories.forEach(cat => {
