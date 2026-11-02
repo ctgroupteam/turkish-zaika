@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Turkish Zaika Restaurant • Solapur | Digital Menu</title>
-  <meta name="description" content="Explore the authentic Turkish & Mughlai digital menu of Turkish Zaika Restaurant in Solapur. Kebabs, Arabian Mandi, Royal Gravies, Baklava & more.">
+  <meta name="description" content="Explore the authentic Turkish & Mughlai digital menu of Turkish Zaika Restaurant in Solapur. Kebabs, Arabian Mandi, Royal Gravies, Kunafa & more.">
   <meta property="og:title" content="Turkish Zaika Restaurant • Solapur | Digital Menu">
-  <meta property="og:description" content="View our complete dining menu, special platters, and desserts at Turkish Zaika, Solapur.">
+  <meta property="og:description" content="Authentic Turkish, Arabian Mandi & Barbecue Menu • Solapur">
   <meta property="og:url" content="https://turkishzaika.linkal.in">
   <meta property="og:type" content="website">
 
@@ -14,25 +14,54 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <!-- QRCode.js for 100% Client-Side QR Generation & Download -->
+  <!-- Standalone QRCode.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
+    /* ==========================================================
+       DESIGN SYSTEM: LIGHT/CREAM (DEFAULT) + 20% NAVY BLUE
+       ========================================================== */
     :root {
-      --bg-dark: #0a0b0e;
-      --bg-card: #12141a;
-      --bg-card-hover: #191c24;
-      --gold-primary: #f59e0b;
-      --gold-light: #fbbf24;
-      --gold-dark: #b45309;
-      --accent-red: #ef4444;
-      --accent-green: #10b981;
-      --text-main: #f3f4f6;
-      --text-muted: #9ca3af;
-      --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-gold: rgba(245, 158, 11, 0.35);
+      /* Light / Cream Theme (Default) */
+      --bg-body: #faf7f2;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-subtle: #f4ede2;
+      --navy-deep: #0f1d38;
+      --navy-soft: #1a2f55;
+      --navy-light: #254173;
+      --text-primary: #111827;
+      --text-secondary: #4b5563;
+      --text-muted: #6b7280;
+      --border-color: #e6ded3;
+      --border-accent: rgba(15, 29, 56, 0.15);
+      --red-brand: #e11d48;
+      --red-neon: #ff2e2e;
+      --green-veg: #10b981;
+      --amber-gold: #d97706;
+      --gold-light: #f59e0b;
+      --card-shadow: 0 4px 20px rgba(15, 29, 56, 0.06);
+      --card-shadow-hover: 0 12px 32px rgba(15, 29, 56, 0.14);
       --font-heading: 'Cinzel', serif;
       --font-body: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    [data-theme="dark"] {
+      /* Dark Mode Palette */
+      --bg-body: #0a0c12;
+      --bg-surface: #12151e;
+      --bg-card: #151924;
+      --bg-card-subtle: #1c2130;
+      --navy-deep: #162444;
+      --navy-soft: #233660;
+      --navy-light: #324c80;
+      --text-primary: #f9fafb;
+      --text-secondary: #d1d5db;
+      --text-muted: #9ca3af;
+      --border-color: rgba(255, 255, 255, 0.09);
+      --border-accent: rgba(245, 158, 11, 0.3);
+      --card-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+      --card-shadow-hover: 0 14px 36px rgba(0, 0, 0, 0.7);
     }
 
     * {
@@ -43,28 +72,29 @@
     }
 
     body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
+      background-color: var(--bg-body);
+      color: var(--text-primary);
       font-family: var(--font-body);
       min-height: 100vh;
       overflow-x: hidden;
       line-height: 1.5;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     /* ==========================================================
-       1. ENTRANCE LOADING ANIMATION OVERLAY
+       1. ENTRANCE LOADING ANIMATION OVERLAY (Uses Real Logo)
        ========================================================== */
     #loading-overlay {
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at center, #171923 0%, #07080b 100%);
+      background: var(--bg-body);
       z-index: 99999;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 24px;
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s;
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.7s;
     }
 
     #loading-overlay.hidden {
@@ -75,203 +105,235 @@
 
     .loader-box {
       text-align: center;
-      max-width: 420px;
+      max-width: 380px;
       width: 100%;
     }
 
-    .emblem-icon {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 20px;
-      position: relative;
+    .loader-logo-wrapper {
+      width: 240px;
+      max-width: 85%;
+      margin: 0 auto 24px;
+      animation: pulseLogo 2s infinite ease-in-out;
     }
 
-    .emblem-icon svg {
+    .loader-logo-wrapper img {
       width: 100%;
-      height: 100%;
-      filter: drop-shadow(0 0 16px rgba(245, 158, 11, 0.5));
-      animation: pulseGlow 2.4s infinite ease-in-out;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 8px 24px rgba(15, 29, 56, 0.15));
     }
 
-    @keyframes pulseGlow {
-      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.4)); }
-      50% { transform: scale(1.08); filter: drop-shadow(0 0 24px rgba(245, 158, 11, 0.85)); }
+    @keyframes pulseLogo {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
     }
 
     .welcome-text {
       font-size: 13px;
       text-transform: uppercase;
-      letter-spacing: 4px;
-      color: var(--gold-light);
-      font-weight: 600;
-      margin-bottom: 8px;
-      animation: fadeInUp 0.8s ease forwards;
-    }
-
-    .restaurant-title {
-      font-family: var(--font-heading);
-      font-size: 28px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      background: linear-gradient(135deg, #ffffff 20%, #fbbf24 60%, #d97706 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      letter-spacing: 3.5px;
+      color: var(--amber-gold);
+      font-weight: 700;
       margin-bottom: 6px;
-      animation: fadeInUp 1s ease forwards;
     }
 
     .city-subtitle {
       font-size: 14px;
       color: var(--text-muted);
-      letter-spacing: 3px;
+      letter-spacing: 2px;
       text-transform: uppercase;
-      margin-bottom: 30px;
-      animation: fadeInUp 1.2s ease forwards;
+      margin-bottom: 24px;
+      font-weight: 600;
     }
 
     .progress-container {
       width: 100%;
       height: 4px;
-      background: rgba(255, 255, 255, 0.1);
+      background: var(--border-color);
       border-radius: 99px;
       overflow: hidden;
-      position: relative;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .progress-bar {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, #d97706, #fbbf24, #f59e0b);
+      background: linear-gradient(90deg, var(--navy-deep), var(--red-neon), var(--amber-gold));
       border-radius: 99px;
-      transition: width 0.3s ease;
-      box-shadow: 0 0 12px #f59e0b;
+      transition: width 0.25s ease;
     }
 
     .progress-label {
       font-size: 11px;
-      color: #6b7280;
+      color: var(--text-muted);
       letter-spacing: 1px;
       text-transform: uppercase;
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to { opacity: 1; transform: translateY(0); }
+      font-weight: 600;
     }
 
     /* ==========================================================
-       2. TOP PROMOTIONAL / LINKAL MARKETING BANNER
+       2. TOP MARKETING BANNER (Linkal Digital Menu)
        ========================================================== */
     .linkal-marketing-banner {
-      background: linear-gradient(90deg, #181920 0%, #222533 50%, #181920 100%);
-      border-bottom: 1px solid var(--border-gold);
-      padding: 9px 16px;
+      background: var(--navy-deep);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 8px 16px;
       text-align: center;
       font-size: 12px;
-      color: #d1d5db;
+      color: #e5e7eb;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
     .linkal-marketing-banner a {
-      color: var(--gold-light);
+      color: #fbbf24;
       font-weight: 700;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      transition: color 0.2s;
+      transition: opacity 0.2s;
     }
 
     .linkal-marketing-banner a:hover {
       text-decoration: underline;
-      color: #fff;
+      opacity: 0.9;
     }
 
     .badge-pill {
-      background: rgba(245, 158, 11, 0.15);
-      border: 1px solid var(--border-gold);
-      color: var(--gold-light);
+      background: rgba(251, 191, 36, 0.18);
+      border: 1px solid rgba(251, 191, 36, 0.35);
+      color: #fbbf24;
       font-size: 10px;
-      font-weight: 700;
-      padding: 2px 7px;
+      font-weight: 800;
+      padding: 2px 8px;
       border-radius: 99px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
     /* ==========================================================
-       3. RESTAURANT HERO HEADER
+       3. TOP NAVBAR & THEME TOGGLE
        ========================================================== */
-    .header-hero {
-      padding: 32px 20px 24px;
-      text-align: center;
-      position: relative;
-      background: radial-gradient(circle at top center, rgba(245, 158, 11, 0.08) 0%, transparent 70%);
-      border-bottom: 1px solid var(--border-subtle);
+    .top-nav {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 14px 20px 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    .brand-emblem {
-      width: 72px;
-      height: 72px;
-      margin: 0 auto 16px;
-      background: linear-gradient(145deg, #1a1d26, #11131a);
-      border: 1.5px solid var(--border-gold);
-      border-radius: 50%;
+    .nav-brand-badge {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--navy-deep);
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      padding: 4px 10px;
+      border-radius: 8px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    [data-theme="dark"] .nav-brand-badge {
+      color: #fbbf24;
+    }
+
+    .theme-toggle-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(245, 158, 11, 0.1);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      transition: all 0.25s ease;
     }
 
-    .brand-emblem svg {
-      width: 38px;
-      height: 38px;
-      color: var(--gold-primary);
+    .theme-toggle-btn:hover {
+      background: var(--bg-card-subtle);
+      border-color: var(--navy-soft);
+      transform: translateY(-1px);
     }
 
-    .main-title {
-      font-family: var(--font-heading);
-      font-size: clamp(26px, 5vw, 38px);
-      font-weight: 900;
-      letter-spacing: 1.5px;
-      color: #ffffff;
-      margin-bottom: 6px;
+    .theme-toggle-btn svg {
+      width: 19px;
+      height: 19px;
     }
 
-    .cuisine-tag {
-      font-size: 13px;
-      color: var(--gold-light);
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      font-weight: 600;
-      margin-bottom: 12px;
+    /* ==========================================================
+       4. RESTAURANT HERO HEADER (Using Signboard Logo)
+       ========================================================== */
+    .header-hero {
+      padding: 16px 20px 24px;
+      text-align: center;
+      position: relative;
     }
 
-    .location-bar {
+    .hero-signboard-wrapper {
+      max-width: 320px;
+      width: 90%;
+      margin: 0 auto 18px;
+      background: #08090d;
+      border-radius: 16px;
+      padding: 8px;
+      box-shadow: 0 12px 32px rgba(15, 29, 56, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.06);
+      transition: transform 0.3s ease;
+    }
+
+    .hero-signboard-wrapper:hover {
+      transform: scale(1.02);
+    }
+
+    .hero-signboard-wrapper img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+    }
+
+    .location-info {
       display: inline-flex;
       align-items: center;
       gap: 12px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border-subtle);
-      padding: 6px 16px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      padding: 7px 18px;
       border-radius: 99px;
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-bottom: 22px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
-    .location-bar span {
+    .info-item {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 6px;
+      font-weight: 600;
     }
 
-    /* Action Buttons in Header (Share & QR Code) */
+    .info-item svg {
+      width: 15px;
+      height: 15px;
+      color: var(--navy-soft);
+    }
+
+    [data-theme="dark"] .info-item svg {
+      color: #fbbf24;
+    }
+
+    /* Action Buttons (Share & QR Code) */
     .header-actions {
       display: flex;
       justify-content: center;
@@ -280,50 +342,57 @@
     }
 
     .btn-action {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-main);
-      padding: 10px 18px;
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-color);
+      color: var(--text-primary);
+      padding: 10px 20px;
       border-radius: 12px;
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 13.5px;
+      font-weight: 700;
       display: inline-flex;
       align-items: center;
       gap: 8px;
       cursor: pointer;
       transition: all 0.25s ease;
       font-family: var(--font-body);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     }
 
     .btn-action:hover, .btn-action:active {
-      background: rgba(245, 158, 11, 0.15);
-      border-color: var(--gold-primary);
-      color: var(--gold-light);
+      border-color: var(--navy-deep);
+      color: var(--navy-deep);
+      background: var(--bg-card-subtle);
       transform: translateY(-2px);
     }
 
     .btn-action.btn-qr {
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.3));
-      border-color: var(--border-gold);
-      color: #fff;
+      background: var(--navy-deep);
+      color: #ffffff;
+      border-color: var(--navy-deep);
+    }
+
+    .btn-action.btn-qr:hover {
+      background: var(--navy-soft);
+      color: #ffffff;
     }
 
     /* ==========================================================
-       4. SEARCH & FILTER CONTROLS (Sticky on Scroll)
+       5. CONTROLS: SEARCH & CATEGORY PILLS (Sticky)
        ========================================================== */
     .sticky-controls-wrapper {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(10, 11, 14, 0.95);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border-subtle);
-      padding: 14px 20px;
+      background: var(--bg-body);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 20px;
+      transition: background-color 0.3s ease;
     }
 
     .controls-container {
-      max-width: 1100px;
+      max-width: 1140px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -353,19 +422,20 @@
 
     .search-input {
       width: 100%;
-      background: #151821;
-      border: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-color);
       border-radius: 12px;
-      padding: 10px 14px 10px 42px;
-      color: #fff;
+      padding: 11px 14px 11px 42px;
+      color: var(--text-primary);
       font-size: 14px;
       font-family: var(--font-body);
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
     .search-input:focus {
-      border-color: var(--gold-primary);
+      border-color: var(--navy-deep);
+      box-shadow: 0 0 0 3px rgba(15, 29, 56, 0.1);
     }
 
     .diet-filters {
@@ -374,46 +444,46 @@
     }
 
     .diet-btn {
-      padding: 8px 12px;
-      border-radius: 10px;
-      font-size: 12px;
-      font-weight: 600;
-      border: 1px solid var(--border-subtle);
-      background: #141720;
-      color: var(--text-muted);
+      padding: 9px 14px;
+      border-radius: 11px;
+      font-size: 12.5px;
+      font-weight: 700;
+      border: 1.5px solid var(--border-color);
+      background: var(--bg-surface);
+      color: var(--text-secondary);
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
       transition: all 0.2s;
     }
 
     .diet-btn.active {
-      background: rgba(255, 255, 255, 0.12);
-      color: #fff;
-      border-color: rgba(255, 255, 255, 0.3);
+      background: var(--navy-deep);
+      color: #ffffff;
+      border-color: var(--navy-deep);
     }
 
     .diet-btn.veg.active {
-      background: rgba(16, 185, 129, 0.18);
-      color: #34d399;
-      border-color: #10b981;
+      background: #047857;
+      color: #ffffff;
+      border-color: #047857;
     }
 
     .diet-btn.nonveg.active {
-      background: rgba(239, 68, 68, 0.18);
-      color: #f87171;
-      border-color: #ef4444;
+      background: #be123c;
+      color: #ffffff;
+      border-color: #be123c;
     }
 
     .diet-icon {
-      width: 12px;
-      height: 12px;
-      border-radius: 2px;
+      width: 13px;
+      height: 13px;
+      border-radius: 3px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border: 1.5px solid currentColor;
+      border: 2px solid currentColor;
     }
 
     .diet-icon::after {
@@ -439,30 +509,44 @@
 
     .pill-btn {
       white-space: nowrap;
-      padding: 8px 16px;
+      padding: 9px 18px;
       border-radius: 99px;
       font-size: 13px;
-      font-weight: 600;
-      background: #151821;
-      border: 1px solid var(--border-subtle);
-      color: var(--text-muted);
+      font-weight: 700;
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-color);
+      color: var(--text-secondary);
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
       transition: all 0.2s;
     }
 
+    .pill-btn svg {
+      width: 15px;
+      height: 15px;
+    }
+
     .pill-btn.active {
-      background: var(--gold-primary);
-      color: #000;
-      font-weight: 700;
-      border-color: var(--gold-primary);
-      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+      background: var(--navy-deep);
+      color: #ffffff;
+      border-color: var(--navy-deep);
+      box-shadow: 0 4px 14px rgba(15, 29, 56, 0.18);
+    }
+
+    [data-theme="dark"] .pill-btn.active {
+      background: #fbbf24;
+      color: #000000;
+      border-color: #fbbf24;
+      box-shadow: 0 4px 14px rgba(251, 191, 36, 0.25);
     }
 
     /* ==========================================================
-       5. MENU GRID & ITEM CARDS
+       6. MENU GRID & 9:16 ASPECT RATIO DISH CARDS
        ========================================================== */
     .menu-main {
-      max-width: 1100px;
+      max-width: 1140px;
       margin: 0 auto;
       padding: 24px 20px 80px;
     }
@@ -470,54 +554,79 @@
     .category-section-title {
       font-family: var(--font-heading);
       font-size: 20px;
-      color: #fff;
-      margin: 32px 0 16px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-primary);
+      margin: 36px 0 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--border-color);
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
+    .title-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .title-left svg {
+      width: 20px;
+      height: 20px;
+      color: var(--navy-deep);
+    }
+
+    [data-theme="dark"] .title-left svg {
+      color: #fbbf24;
+    }
+
     .category-count {
       font-family: var(--font-body);
       font-size: 12px;
-      color: var(--gold-light);
-      background: rgba(245, 158, 11, 0.1);
-      padding: 3px 10px;
+      font-weight: 700;
+      color: var(--navy-deep);
+      background: var(--bg-card-subtle);
+      padding: 4px 12px;
       border-radius: 99px;
-      border: 1px solid var(--border-gold);
+      border: 1px solid var(--border-color);
     }
 
+    [data-theme="dark"] .category-count {
+      color: #fbbf24;
+    }
+
+    /* 9:16 Responsive Mobile-First Grid */
     .menu-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
     }
 
     .item-card {
       background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: 16px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 18px;
       overflow: hidden;
       cursor: pointer;
       transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
       display: flex;
       flex-direction: column;
+      box-shadow: var(--card-shadow);
       position: relative;
     }
 
     .item-card:hover {
       transform: translateY(-4px);
-      border-color: var(--border-gold);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+      border-color: var(--navy-soft);
+      box-shadow: var(--card-shadow-hover);
     }
 
+    /* 9:16 Aspect Ratio Media Box */
     .card-media {
       position: relative;
       width: 100%;
-      height: 190px;
-      background: #1a1d26;
+      aspect-ratio: 9 / 16;
+      max-height: 400px;
+      background: var(--bg-card-subtle);
       overflow: hidden;
     }
 
@@ -525,47 +634,54 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      display: block;
       transition: transform 0.5s ease;
     }
 
     .item-card:hover .card-img {
-      transform: scale(1.05);
+      transform: scale(1.04);
     }
 
     .serving-badge {
       position: absolute;
-      bottom: 10px;
-      left: 10px;
-      background: rgba(10, 11, 14, 0.85);
+      bottom: 12px;
+      left: 12px;
+      background: rgba(15, 29, 56, 0.88);
       backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 3px 9px;
-      border-radius: 6px;
-      font-size: 11px;
-      font-weight: 600;
-      color: #e5e7eb;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #ffffff;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 6px;
+    }
+
+    .serving-badge svg {
+      width: 13px;
+      height: 13px;
+      color: #fbbf24;
     }
 
     .bestseller-badge {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      background: linear-gradient(135deg, #d97706, #f59e0b);
-      color: #000;
+      top: 12px;
+      right: 12px;
+      background: linear-gradient(135deg, #be123c, #e11d48);
+      color: #ffffff;
       font-size: 10px;
       font-weight: 800;
       text-transform: uppercase;
-      padding: 3px 9px;
-      border-radius: 6px;
+      padding: 4px 10px;
+      border-radius: 7px;
       letter-spacing: 0.5px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.4);
     }
 
     .card-body {
-      padding: 16px;
+      padding: 16px 18px;
       display: flex;
       flex-direction: column;
       flex: 1;
@@ -580,23 +696,27 @@
     }
 
     .item-name {
-      font-size: 16px;
-      font-weight: 700;
-      color: #fff;
+      font-size: 16.5px;
+      font-weight: 800;
+      color: var(--text-primary);
       line-height: 1.3;
     }
 
     .item-price {
-      font-size: 17px;
-      font-weight: 800;
-      color: var(--gold-light);
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--navy-deep);
       white-space: nowrap;
       font-family: var(--font-heading);
     }
 
+    [data-theme="dark"] .item-price {
+      color: #fbbf24;
+    }
+
     .item-desc {
       font-size: 13px;
-      color: var(--text-muted);
+      color: var(--text-secondary);
       line-height: 1.45;
       margin-bottom: 14px;
       flex: 1;
@@ -611,34 +731,38 @@
       align-items: center;
       justify-content: space-between;
       padding-top: 10px;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      border-top: 1px solid var(--border-color);
       font-size: 12px;
       color: var(--text-muted);
     }
 
     .tap-hint {
-      color: var(--gold-primary);
-      font-size: 11px;
-      font-weight: 600;
-      display: flex;
+      color: var(--navy-deep);
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-flex;
       align-items: center;
       gap: 4px;
     }
 
+    [data-theme="dark"] .tap-hint {
+      color: #fbbf24;
+    }
+
     /* ==========================================================
-       6. ITEM DETAILS POPUP MODAL
+       7. ITEM DETAILS MODAL (9:16 Adaptive View)
        ========================================================== */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.82);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(10, 15, 26, 0.75);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       z-index: 10000;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 16px;
       opacity: 0;
       visibility: hidden;
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -650,15 +774,15 @@
     }
 
     .modal-content {
-      background: #141720;
-      border: 1px solid var(--border-gold);
-      border-radius: 20px;
-      max-width: 480px;
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-color);
+      border-radius: 24px;
+      max-width: 440px;
       width: 100%;
-      max-height: 90vh;
+      max-height: 92vh;
       overflow-y: auto;
       position: relative;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
       transform: translateY(20px) scale(0.97);
       transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -674,7 +798,7 @@
       width: 36px;
       height: 36px;
       border-radius: 50%;
-      background: rgba(0, 0, 0, 0.65);
+      background: rgba(15, 29, 56, 0.7);
       border: 1px solid rgba(255, 255, 255, 0.2);
       color: #fff;
       display: flex;
@@ -686,15 +810,18 @@
     }
 
     .modal-close-btn:hover {
-      background: var(--gold-primary);
-      color: #000;
+      background: var(--navy-deep);
     }
 
     .modal-media {
       width: 100%;
-      height: 250px;
-      background: #1c202d;
-      position: relative;
+      aspect-ratio: 9 / 16;
+      max-height: 360px;
+      background: var(--bg-card-subtle);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .modal-media img {
@@ -718,36 +845,49 @@
     .modal-title {
       font-size: 20px;
       font-weight: 800;
-      color: #fff;
+      color: var(--text-primary);
     }
 
     .modal-price {
       font-family: var(--font-heading);
       font-size: 24px;
       font-weight: 900;
-      color: var(--gold-light);
+      color: var(--navy-deep);
       white-space: nowrap;
     }
 
+    [data-theme="dark"] .modal-price {
+      color: #fbbf24;
+    }
+
     .modal-portion-box {
-      background: rgba(245, 158, 11, 0.1);
-      border: 1px solid var(--border-gold);
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
       padding: 10px 14px;
       border-radius: 12px;
       margin: 14px 0;
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--gold-light);
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--navy-deep);
+    }
+
+    [data-theme="dark"] .modal-portion-box {
+      color: #fbbf24;
+    }
+
+    .modal-portion-box svg {
+      width: 17px;
+      height: 17px;
     }
 
     .modal-desc {
       font-size: 14px;
-      color: #d1d5db;
+      color: var(--text-secondary);
       line-height: 1.6;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .modal-tags {
@@ -757,62 +897,66 @@
     }
 
     .modal-tag {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-subtle);
-      font-size: 11px;
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      font-size: 11.5px;
+      font-weight: 600;
       padding: 4px 10px;
       border-radius: 99px;
-      color: var(--text-muted);
+      color: var(--text-secondary);
     }
 
     /* ==========================================================
-       7. QR CODE POPUP MODAL (Print / Download Ready)
+       8. QR CODE POPUP MODAL (Print / Download Ready)
        ========================================================== */
     .qr-card-printable {
       background: #ffffff;
       color: #111827;
       border-radius: 16px;
-      padding: 24px;
+      padding: 22px;
       text-align: center;
-      margin-bottom: 18px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      margin-bottom: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e5e7eb;
     }
 
-    .qr-card-header {
-      font-family: var(--font-heading);
-      font-size: 18px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      color: #b45309;
-      margin-bottom: 2px;
+    .qr-card-logo {
+      max-width: 180px;
+      margin: 0 auto 12px;
+    }
+
+    .qr-card-logo img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
     .qr-card-sub {
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 2px;
-      color: #6b7280;
-      font-weight: 700;
-      margin-bottom: 16px;
+      color: #4b5563;
+      font-weight: 800;
+      margin-bottom: 14px;
     }
 
     #qrcode-canvas-container {
       display: flex;
       justify-content: center;
-      margin: 12px 0 16px;
+      margin: 10px 0 14px;
     }
 
     #qrcode-canvas-container canvas, #qrcode-canvas-container img {
-      padding: 10px;
+      padding: 8px;
       background: #fff;
       border: 1px solid #e5e7eb;
       border-radius: 12px;
     }
 
     .qr-card-footer {
-      font-size: 12px;
-      font-weight: 700;
-      color: #111827;
+      font-size: 12.5px;
+      font-weight: 800;
+      color: var(--navy-deep);
       word-break: break-all;
     }
 
@@ -837,52 +981,81 @@
     }
 
     .btn-download-qr {
-      background: var(--gold-primary);
-      color: #000;
+      background: var(--navy-deep);
+      color: #ffffff;
       transition: background 0.2s;
     }
 
     .btn-download-qr:hover {
-      background: var(--gold-light);
+      background: var(--navy-soft);
     }
 
     .btn-copy-link {
-      background: #202432;
-      color: #fff;
-      border: 1px solid var(--border-subtle) !important;
+      background: var(--bg-card-subtle);
+      color: var(--text-primary);
+      border: 1.5px solid var(--border-color) !important;
     }
 
     /* ==========================================================
-       8. FOOTER
+       9. CLEAN FOOTER
        ========================================================== */
     footer {
-      border-top: 1px solid var(--border-subtle);
-      padding: 32px 20px;
+      border-top: 1px solid var(--border-color);
+      padding: 28px 20px;
       text-align: center;
-      font-size: 12px;
+      font-size: 12.5px;
       color: var(--text-muted);
     }
 
     footer p {
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     footer a {
-      color: var(--gold-primary);
+      color: var(--navy-deep);
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 700;
     }
 
-    /* Responsive Tweaks */
+    [data-theme="dark"] footer a {
+      color: #fbbf24;
+    }
+
+    /* Responsive adjustments */
     @media (max-width: 640px) {
       .menu-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
       }
       .card-media {
-        height: 170px;
+        max-height: 250px;
       }
-      .main-title {
-        font-size: 24px;
+      .card-body {
+        padding: 12px;
+      }
+      .item-name {
+        font-size: 14px;
+      }
+      .item-price {
+        font-size: 15px;
+      }
+      .item-desc {
+        display: none; /* Keeps mobile view ultra-clean like Swiggy/Zomato */
+      }
+      .serving-badge {
+        font-size: 10px;
+        padding: 3px 6px;
+        left: 6px;
+        bottom: 6px;
+      }
+      .bestseller-badge {
+        font-size: 9px;
+        padding: 3px 6px;
+        top: 6px;
+        right: 6px;
+      }
+      .hero-signboard-wrapper {
+        max-width: 260px;
       }
     }
   </style>
@@ -894,16 +1067,10 @@
        ========================================================== -->
   <div id="loading-overlay">
     <div class="loader-box">
-      <div class="emblem-icon">
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="46" stroke="#f59e0b" stroke-width="3" stroke-dasharray="6 4"/>
-          <!-- Crescent & Star Turkish Emblem -->
-          <path d="M58 24C43.6 24 32 35.6 32 50C32 64.4 43.6 76 58 76C63.2 76 68 74.5 72 71.8C60 70.5 50.5 60.5 50.5 48C50.5 35.5 60 25.5 72 24.2C68 21.5 63.2 24 58 24Z" fill="#f59e0b"/>
-          <polygon points="68,43 71,49 77,50 72,54 74,60 68,57 63,60 65,54 60,50 66,49" fill="#fbbf24"/>
-        </svg>
+      <div class="loader-logo-wrapper">
+        <img src="images/turkish_zaika_logo.svg" alt="Turkish Zaika Restaurant Logo">
       </div>
       <div class="welcome-text">Welcome to</div>
-      <h1 class="restaurant-title">TURKISH ZAIKA</h1>
       <div class="city-subtitle">Solapur • Authentic Menu</div>
 
       <div class="progress-container">
@@ -920,35 +1087,57 @@
     <span class="badge-pill">Powered by Linkal</span>
     <span>Want your own free digital menu website?</span>
     <a href="https://linkal.in" target="_blank" rel="noopener">
-      Get your free menu at linkal.in →
+      Get your free menu at linkal.in
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>
   </aside>
 
   <!-- ==========================================================
-       3. RESTAURANT HERO HEADER
+       3. TOP NAVBAR WITH DARK/LIGHT MODE TOGGLE
+       ========================================================== -->
+  <div class="top-nav">
+    <span class="nav-brand-badge">Digital Menu</span>
+    <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle Dark/Light Mode" aria-label="Toggle Theme">
+      <!-- Sun Icon (shown in dark mode) -->
+      <svg class="sun-icon" style="display: none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+      </svg>
+      <!-- Moon Icon (shown in light mode) -->
+      <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- ==========================================================
+       4. RESTAURANT HERO HEADER (Using Exact Signboard Logo)
        ========================================================== -->
   <header class="header-hero">
-    <div class="brand-emblem">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/>
-        <path d="m15 9-6 6M9 9l6 6"/>
-      </svg>
+    <div class="hero-signboard-wrapper">
+      <img src="images/turkish_zaika_logo.svg" alt="Turkish Zaika Restaurant Solapur">
     </div>
-    <h1 class="main-title">Turkish Zaika Restaurant</h1>
-    <p class="cuisine-tag">Authentic Turkish & Mughlai Delicacies</p>
-    
-    <div class="location-bar">
-      <span>📍 Solapur, Maharashtra</span>
+
+    <div class="location-info">
+      <span class="info-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        Solapur, Maharashtra
+      </span>
       <span>•</span>
-      <span>⏰ 12:00 PM – 11:30 PM</span>
+      <span class="info-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        12:00 PM – 11:30 PM
+      </span>
       <span>•</span>
-      <span>🍽️ Dine-in Menu</span>
+      <span class="info-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
+        Dine-in Menu
+      </span>
     </div>
 
     <!-- Header Actions: Share & Table QR Code -->
     <div class="header-actions">
       <button class="btn-action" id="share-menu-btn" title="Share this digital menu with friends">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
           <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
         </svg>
@@ -956,7 +1145,7 @@
       </button>
 
       <button class="btn-action btn-qr" id="open-qr-btn" title="View & Download Table QR Code">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
           <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
         </svg>
@@ -966,7 +1155,7 @@
   </header>
 
   <!-- ==========================================================
-       4. CONTROLS: SEARCH & CATEGORY PILLS (Sticky)
+       5. CONTROLS: SEARCH & CATEGORY PILLS (Sticky)
        ========================================================== -->
   <section class="sticky-controls-wrapper">
     <div class="controls-container">
@@ -975,7 +1164,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
           </svg>
-          <input type="text" id="menu-search-input" class="search-input" placeholder="Search kebabs, mandi, biryani, desserts..." autocomplete="off">
+          <input type="text" id="menu-search-input" class="search-input" placeholder="Search mandi, kebabs, prawns, gravies..." autocomplete="off">
         </div>
 
         <div class="diet-filters">
@@ -989,26 +1178,41 @@
         </div>
       </div>
 
-      <!-- Categories Scroll -->
+      <!-- Categories Scroll with SVG Icons -->
       <nav class="category-pills" id="category-pills">
-        <button class="pill-btn active" data-category="all">✨ All Dishes (15)</button>
-        <button class="pill-btn" data-category="mandi">🍚 Arabian Mandi & Feasts</button>
-        <button class="pill-btn" data-category="kebabs">🍢 Kebabs, Platters & Seafood</button>
-        <button class="pill-btn" data-category="curries">🍲 Royal Gravies</button>
-        <button class="pill-btn" data-category="desserts">🍯 Turkish Desserts</button>
+        <button class="pill-btn active" data-category="all">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          All Dishes (15)
+        </button>
+        <button class="pill-btn" data-category="mandi">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a9 9 0 0 0-9 9v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a9 9 0 0 0-9-9Z"/><path d="M7 14h10"/></svg>
+          Arabian Mandi & Feasts
+        </button>
+        <button class="pill-btn" data-category="kebabs">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="2" y1="2" x2="22" y2="22"/><circle cx="7" cy="7" r="3"/><circle cx="12" cy="12" r="3"/><circle cx="17" cy="17" r="3"/></svg>
+          Kebabs, Platters & Seafood
+        </button>
+        <button class="pill-btn" data-category="curries">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M4 11h16a1 1 0 0 1 1 1v2a7 7 0 0 1-7 7h-2a7 7 0 0 1-7-7v-2a1 1 0 0 1 1-1Z"/><path d="M6 19v2"/><path d="M18 19v2"/></svg>
+          Royal Gravies
+        </button>
+        <button class="pill-btn" data-category="desserts">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4"/><path d="M4 10h16a2 2 0 0 1 2 2v6a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4v-6a2 2 0 0 1 2-2Z"/></svg>
+          Turkish Desserts
+        </button>
       </nav>
     </div>
   </section>
 
   <!-- ==========================================================
-       5. MAIN MENU DISPLAY
+       6. MAIN MENU DISPLAY
        ========================================================== -->
   <main class="menu-main" id="menu-container">
     <!-- Rendered dynamically by JavaScript -->
   </main>
 
   <!-- ==========================================================
-       6. ITEM DETAILS MODAL
+       7. ITEM DETAILS MODAL (9:16 Adaptive View)
        ========================================================== -->
   <div class="modal-overlay" id="item-modal">
     <div class="modal-content">
@@ -1023,7 +1227,8 @@
         </div>
         
         <div class="modal-portion-box">
-          <span>👥 Capacity:</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Portion:</span>
           <span id="modal-portion">Serves 2-3 Persons</span>
         </div>
 
@@ -1037,14 +1242,16 @@
   </div>
 
   <!-- ==========================================================
-       7. TABLE QR CODE MODAL (Print / Download Ready)
+       8. TABLE QR CODE MODAL (Print / Download Ready)
        ========================================================== -->
   <div class="modal-overlay" id="qr-modal">
     <div class="modal-content" style="max-width: 400px; padding: 22px;">
       <button class="modal-close-btn" id="qr-close-btn">&times;</button>
 
       <div class="qr-card-printable" id="printable-qr-card">
-        <h3 class="qr-card-header">TURKISH ZAIKA</h3>
+        <div class="qr-card-logo">
+          <img src="images/turkish_zaika_logo.svg" alt="Turkish Zaika">
+        </div>
         <p class="qr-card-sub">Solapur • Contactless Digital Menu</p>
         
         <div id="qrcode-canvas-container"></div>
@@ -1060,31 +1267,57 @@
           Download QR Image
         </button>
         <button class="btn-copy-link" id="copy-menu-link-btn">
-          📋 Copy Link
+          Copy Link
         </button>
       </div>
     </div>
   </div>
 
   <!-- ==========================================================
-       8. FOOTER
+       9. CLEAN FOOTER (Without local cache text)
        ========================================================== -->
   <footer>
     <p><strong>Turkish Zaika Restaurant</strong> • Solapur, Maharashtra</p>
-    <p>Crafted for sub-second contactless dining with <a href="https://linkal.in" target="_blank">Linkal.in</a></p>
-    <p style="color: #6b7280; font-size: 11px; margin-top: 8px;">Images cached locally for instant repeat visits • © 2026 Turkish Zaika</p>
+    <p>Crafted for sub-second contactless dining with <a href="https://linkal.in" target="_blank" rel="noopener">Linkal.in</a></p>
+    <p style="color: var(--text-muted); font-size: 11px; margin-top: 8px;">© 2026 Turkish Zaika Family Restaurant</p>
   </footer>
 
   <!-- ==========================================================
-       9. JAVASCRIPT: MENU DATA, CACHING & INTERACTIVE LOGIC
+       10. JAVASCRIPT: THEME TOGGLE, MENU DATA & LOGIC
        ========================================================== -->
   <script>
     // -------------------------------------------------------------
-    // Menu Database: Turkish Zaika Solapur
-    // Images map to files inside the "images/" folder.
+    // Theme Management: Light/Cream (Default) & Dark Mode
+    // -------------------------------------------------------------
+    const themeToggleBtn = document.getElementById("theme-toggle-btn");
+    const sunIcon = themeToggleBtn.querySelector(".sun-icon");
+    const moonIcon = themeToggleBtn.querySelector(".moon-icon");
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("tz-theme", theme);
+      if (theme === "dark") {
+        sunIcon.style.display = "block";
+        moonIcon.style.display = "none";
+      } else {
+        sunIcon.style.display = "none";
+        moonIcon.style.display = "block";
+      }
+    }
+
+    const savedTheme = localStorage.getItem("tz-theme") || "light";
+    applyTheme(savedTheme);
+
+    themeToggleBtn.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme");
+      applyTheme(current === "dark" ? "light" : "dark");
+    });
+
+    // -------------------------------------------------------------
+    // Menu Database: Turkish Zaika Solapur (15 Dishes in 9:16)
     // -------------------------------------------------------------
     const MENU_DATA = [
-      // Category: Mandi & Biryani
+      // Category: Mandi & Feasts
       {
         id: "tz-alfaham-mandi",
         name: "Chicken Alfaham Mandi (Family Feast)",
@@ -1273,52 +1506,22 @@
       }
     ];
 
-    // Current State
     let activeCategory = "all";
     let activeDiet = "all";
     let searchQuery = "";
     const MENU_URL = "https://turkishzaika.linkal.in";
 
-    // -------------------------------------------------------------
-    // Image Caching via CacheStorage & DataURL Fallback
-    // -------------------------------------------------------------
-    const CACHE_NAME = "turkish-zaika-v1";
-
-    async function getCachedImageUrl(url) {
-      if (!('caches' in window)) return url;
-      try {
-        const cache = await caches.open(CACHE_NAME);
-        const cachedResponse = await cache.match(url);
-        if (cachedResponse) {
-          const blob = await cachedResponse.blob();
-          return URL.createObjectURL(blob);
-        }
-        // Fetch and cache
-        const fetchResponse = await fetch(url);
-        if (fetchResponse.ok) {
-          cache.put(url, fetchResponse.clone());
-          const blob = await fetchResponse.blob();
-          return URL.createObjectURL(blob);
-        }
-      } catch (e) {
-        // Fallback gracefully
-      }
-      return url;
-    }
-
-    // Default Fallback Placeholder SVG
+    // Fallback Placeholder SVG
     function getPlaceholderImage(name) {
-      const initials = name.split(" ").slice(0, 2).map(n => n[0]).join("");
-      return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="100%" height="100%" fill="%23171a24"/><circle cx="300" cy="200" r="100" fill="%23222736"/><text x="50%" y="48%" dominant-baseline="middle" text-anchor="middle" fill="%23f59e0b" font-family="serif" font-size="34" font-weight="bold">TURKISH ZAIKA</text><text x="50%" y="62%" dominant-baseline="middle" text-anchor="middle" fill="%239ca3af" font-family="sans-serif" font-size="20">${encodeURIComponent(name)}</text></svg>`;
+      return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="450" height="800" viewBox="0 0 450 800"><rect width="100%" height="100%" fill="%231a2233"/><text x="50%" y="46%" dominant-baseline="middle" text-anchor="middle" fill="%23fbbf24" font-family="serif" font-size="28" font-weight="bold">TURKISH ZAIKA</text><text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="%239ca3af" font-family="sans-serif" font-size="16">${encodeURIComponent(name)}</text></svg>`;
     }
 
     // -------------------------------------------------------------
-    // Render Menu Items
+    // Render Menu Items (9:16 Cards)
     // -------------------------------------------------------------
     const menuContainer = document.getElementById("menu-container");
 
     function renderMenu() {
-      // Filter logic
       const filtered = MENU_DATA.filter(item => {
         const matchesCategory = (activeCategory === "all") || (item.category === activeCategory);
         const matchesDiet = (activeDiet === "all") || (item.diet === activeDiet);
@@ -1331,24 +1534,39 @@
 
       if (filtered.length === 0) {
         menuContainer.innerHTML = `
-          <div style="text-align: center; padding: 60px 20px; color: #9ca3af;">
+          <div style="text-align: center; padding: 60px 20px; color: var(--text-muted);">
             <svg style="width: 48px; height: 48px; margin: 0 auto 12px; opacity: 0.5;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
             </svg>
-            <h3 style="font-size: 18px; color: #fff; margin-bottom: 6px;">No Delicacies Found</h3>
+            <h3 style="font-size: 18px; color: var(--text-primary); margin-bottom: 6px;">No Dishes Found</h3>
             <p style="font-size: 13px;">Try adjusting your search terms or dietary filter.</p>
           </div>
         `;
         return;
       }
 
-      // Group by Category if viewing "All"
       let html = "";
       const categories = [
-        { id: "mandi", title: "🍚 Arabian Mandi & Feasts" },
-        { id: "kebabs", title: "🍢 Kebabs, Platters & Seafood" },
-        { id: "curries", title: "🍲 Royal Gravies" },
-        { id: "desserts", title: "🍯 Turkish Desserts" }
+        { 
+          id: "mandi", 
+          title: "Arabian Mandi & Feasts", 
+          svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a9 9 0 0 0-9 9v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a9 9 0 0 0-9-9Z"/><path d="M7 14h10"/></svg>'
+        },
+        { 
+          id: "kebabs", 
+          title: "Kebabs, Platters & Seafood", 
+          svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="2" y1="2" x2="22" y2="22"/><circle cx="7" cy="7" r="3"/><circle cx="12" cy="12" r="3"/><circle cx="17" cy="17" r="3"/></svg>'
+        },
+        { 
+          id: "curries", 
+          title: "Royal Gravies", 
+          svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M4 11h16a1 1 0 0 1 1 1v2a7 7 0 0 1-7 7h-2a7 7 0 0 1-7-7v-2a1 1 0 0 1 1-1Z"/></svg>'
+        },
+        { 
+          id: "desserts", 
+          title: "Turkish Desserts", 
+          svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4"/><path d="M4 10h16a2 2 0 0 1 2 2v6a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4v-6a2 2 0 0 1 2-2Z"/></svg>'
+        }
       ];
 
       categories.forEach(cat => {
@@ -1357,18 +1575,22 @@
 
         html += `
           <div class="category-section-title">
-            <span>${cat.title}</span>
+            <div class="title-left">
+              ${cat.svg}
+              <span>${cat.title}</span>
+            </div>
             <span class="category-count">${catItems.length} Dishes</span>
           </div>
           <div class="menu-grid">
         `;
 
         catItems.forEach(item => {
-          const dietBadgeClass = item.diet === "veg" ? "diet-icon veg" : "diet-icon nonveg";
-          const dietColor = item.diet === "veg" ? "#10b981" : "#ef4444";
+          const dietColor = item.diet === "veg" ? "var(--green-veg)" : "var(--red-brand)";
+          const dietLabel = item.diet === "veg" ? "Veg" : "Non-Veg";
 
           html += `
             <article class="item-card" data-id="${item.id}" onclick="openItemModal('${item.id}')">
+              <!-- 9:16 Aspect Ratio Photo Container -->
               <div class="card-media">
                 <img 
                   class="card-img" 
@@ -1378,23 +1600,26 @@
                   onerror="this.onerror=null; this.src='${getPlaceholderImage(item.name)}';"
                 >
                 <div class="serving-badge">
-                  <span>🍽️</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
                   <span>${item.portion}</span>
                 </div>
-                ${item.bestseller ? '<div class="bestseller-badge">★ Chef Choice</div>' : ''}
+                ${item.bestseller ? '<div class="bestseller-badge">Chef Choice</div>' : ''}
               </div>
               <div class="card-body">
                 <div class="card-title-row">
-                  <div style="display: flex; align-items: center; gap: 8px;">
-                    <span class="${dietBadgeClass}" style="color: ${dietColor};"></span>
+                  <div style="display: flex; align-items: center; gap: 7px;">
+                    <span class="diet-icon" style="color: ${dietColor};"></span>
                     <h3 class="item-name">${item.name}</h3>
                   </div>
                   <span class="item-price">₹${item.price}</span>
                 </div>
                 <p class="item-desc">${item.desc}</p>
                 <div class="card-footer">
-                  <span>👥 ${item.portion}</span>
-                  <span class="tap-hint">View Dish Details →</span>
+                  <span style="font-weight: 600;">${dietLabel}</span>
+                  <span class="tap-hint">
+                    Details
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </span>
                 </div>
               </div>
             </article>
@@ -1408,7 +1633,7 @@
     }
 
     // -------------------------------------------------------------
-    // Item Detail Modal
+    // Item Details Modal
     // -------------------------------------------------------------
     const itemModal = document.getElementById("item-modal");
     const modalCloseBtn = document.getElementById("modal-close-btn");
@@ -1467,7 +1692,7 @@
     });
 
     // -------------------------------------------------------------
-    // QR Code Generation & 1-Click High-Res Download
+    // Table QR Code Generation & 1-Click Download
     // -------------------------------------------------------------
     const qrModal = document.getElementById("qr-modal");
     const openQrBtn = document.getElementById("open-qr-btn");
@@ -1481,9 +1706,9 @@
         qrCanvasContainer.innerHTML = "";
         qrInstance = new QRCode(qrCanvasContainer, {
           text: MENU_URL,
-          width: 200,
-          height: 200,
-          colorDark: "#000000",
+          width: 190,
+          height: 190,
+          colorDark: "#0f1d38",
           colorLight: "#ffffff",
           correctLevel: QRCode.CorrectLevel.H
         });
@@ -1495,7 +1720,7 @@
       if (e.target === qrModal) qrModal.classList.remove("open");
     });
 
-    // Download Printable QR Card (PNG with branding)
+    // Download Printable Table QR Image
     document.getElementById("download-qr-btn").addEventListener("click", () => {
       const qrImg = qrCanvasContainer.querySelector("img") || qrCanvasContainer.querySelector("canvas");
       if (!qrImg) return;
@@ -1509,13 +1734,13 @@
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Gold border
-      ctx.strokeStyle = "#b45309";
-      ctx.lineWidth = 8;
+      // Border
+      ctx.strokeStyle = "#0f1d38";
+      ctx.lineWidth = 6;
       ctx.strokeRect(16, 16, canvas.width - 32, canvas.height - 32);
 
       // Header Text
-      ctx.fillStyle = "#b45309";
+      ctx.fillStyle = "#0f1d38";
       ctx.font = "bold 34px Cinzel, serif";
       ctx.textAlign = "center";
       ctx.fillText("TURKISH ZAIKA", canvas.width / 2, 85);
@@ -1528,7 +1753,6 @@
       const drawQR = () => {
         ctx.drawImage(qrImg, 140, 160, 320, 320);
 
-        // Instruction Text
         ctx.fillStyle = "#111827";
         ctx.font = "bold 20px 'Plus Jakarta Sans', sans-serif";
         ctx.fillText("Scan with Camera to View Menu", canvas.width / 2, 530);
@@ -1537,8 +1761,7 @@
         ctx.font = "14px 'Plus Jakarta Sans', sans-serif";
         ctx.fillText("No App Download Required", canvas.width / 2, 560);
 
-        // URL Footer
-        ctx.fillStyle = "#b45309";
+        ctx.fillStyle = "#0f1d38";
         ctx.font = "bold 17px 'Plus Jakarta Sans', sans-serif";
         ctx.fillText("turkishzaika.linkal.in", canvas.width / 2, 630);
 
@@ -1546,7 +1769,6 @@
         ctx.font = "12px 'Plus Jakarta Sans', sans-serif";
         ctx.fillText("Powered by Linkal Website Builder", canvas.width / 2, 700);
 
-        // Trigger Download
         const a = document.createElement("a");
         a.download = "Turkish-Zaika-Table-QR.png";
         a.href = canvas.toDataURL("image/png");
@@ -1568,7 +1790,7 @@
     });
 
     // -------------------------------------------------------------
-    // Share Menu (Web Share API with fallback)
+    // Share Menu (Web Share API)
     // -------------------------------------------------------------
     document.getElementById("share-menu-btn").addEventListener("click", async () => {
       if (navigator.share) {
@@ -1578,11 +1800,8 @@
             text: "Check out the digital menu for Turkish Zaika Restaurant in Solapur:",
             url: MENU_URL
           });
-        } catch (e) {
-          // User cancelled
-        }
+        } catch (e) {}
       } else {
-        // Fallback: Copy link
         navigator.clipboard.writeText(MENU_URL).then(() => {
           alert("Menu link copied to clipboard: " + MENU_URL);
         });
@@ -1590,7 +1809,7 @@
     });
 
     // -------------------------------------------------------------
-    // 10. ENTRANCE ANIMATION & ASSET PRELOAD SEQUENCER
+    // 11. ENTRANCE ANIMATION
     // -------------------------------------------------------------
     window.addEventListener("DOMContentLoaded", () => {
       renderMenu();
@@ -1611,9 +1830,9 @@
           clearInterval(interval);
           setTimeout(() => {
             overlay.classList.add("hidden");
-          }, 400);
+          }, 350);
         }
-      }, 100);
+      }, 90);
     });
   </script>
 </body>
