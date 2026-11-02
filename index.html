@@ -1158,41 +1158,249 @@
       color: #fbbf24;
     }
 
-    /* Responsive adjustments */
+    /* Responsive adjustments for Mobile (Above-the-fold 2-item visibility) */
     @media (max-width: 640px) {
-      .menu-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
+      .linkal-marketing-banner {
+        padding: 4px 10px;
+        font-size: 11px;
+        gap: 6px;
+        line-height: 1.25;
       }
-      .card-media {
-        max-height: 250px;
-      }
-      .card-body {
-        padding: 12px;
-      }
-      .item-name {
-        font-size: 14px;
-      }
-      .item-price {
-        font-size: 15px;
-      }
-      .item-desc {
-        display: none; /* Keeps mobile view ultra-clean like Swiggy/Zomato */
-      }
-      .serving-badge {
-        font-size: 10px;
-        padding: 3px 6px;
-        left: 6px;
-        bottom: 6px;
-      }
-      .bestseller-badge {
+      .linkal-marketing-banner .badge-pill {
         font-size: 9px;
-        padding: 3px 6px;
-        top: 6px;
-        right: 6px;
+        padding: 1.5px 6px;
+      }
+      .linkal-marketing-banner .banner-text {
+        font-size: 10.5px;
+      }
+      .linkal-marketing-banner a {
+        font-size: 10.5px;
+      }
+
+      .top-nav {
+        padding: 4px 12px 2px;
+      }
+      .nav-brand-badge {
+        font-size: 9px;
+        padding: 2px 7px;
+      }
+      .theme-toggle-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+      }
+      .theme-toggle-btn svg {
+        width: 15px;
+        height: 15px;
+      }
+
+      .header-hero {
+        padding: 2px 12px 4px;
       }
       .hero-signboard-wrapper {
-        max-width: 260px;
+        max-width: 200px;
+        margin: 0 auto 5px;
+      }
+      .signboard-neon-box {
+        padding: 5px 8px 4px;
+        border-radius: 10px;
+        border-width: 1.5px;
+      }
+      .neon-turkish {
+        font-size: 20px !important;
+        letter-spacing: 2px !important;
+        margin-bottom: 0px;
+        padding-left: 2px;
+      }
+      .zaika-badge-row {
+        gap: 5px;
+        margin-bottom: 3px;
+      }
+      .signboard-badge-circle {
+        width: 26px;
+        height: 26px;
+        border-width: 1.5px;
+        padding: 1px;
+      }
+      .badge-arc-top {
+        font-size: 3px;
+      }
+      .badge-tz {
+        font-size: 10px !important;
+      }
+      .badge-arc-bot {
+        font-size: 2.8px;
+      }
+      .neon-zaika {
+        font-size: 24px !important;
+        letter-spacing: 3px !important;
+        padding-left: 3px;
+      }
+      .signboard-bottom-bar {
+        padding: 1.5px 5px;
+        border-radius: 4px;
+      }
+      .symbol-box {
+        width: 11px;
+        height: 11px;
+        border-width: 1px;
+      }
+      .symbol-box .symbol-dot {
+        width: 3.5px;
+        height: 3.5px;
+      }
+      .bar-title {
+        font-size: 7.5px;
+        letter-spacing: 0.8px;
+      }
+      .bar-sub {
+        font-size: 6px;
+        letter-spacing: 1px;
+      }
+
+      .location-info {
+        padding: 2.5px 8px;
+        font-size: 10px;
+        margin-bottom: 5px;
+        gap: 5px;
+      }
+      .info-item svg {
+        width: 11px;
+        height: 11px;
+      }
+
+      .header-actions {
+        gap: 6px;
+        margin-bottom: 2px;
+      }
+      .btn-action {
+        padding: 4px 10px;
+        font-size: 11px;
+        border-radius: 8px;
+        gap: 5px;
+      }
+      .btn-action svg {
+        width: 12px;
+        height: 12px;
+      }
+
+      .sticky-controls-wrapper {
+        padding: 5px 10px;
+      }
+      .controls-container {
+        gap: 5px;
+      }
+      .search-box svg {
+        width: 13px;
+        height: 13px;
+        left: 9px;
+      }
+      .search-input {
+        padding: 5px 8px 5px 28px;
+        font-size: 11.5px;
+        border-radius: 8px;
+      }
+      .diet-filters {
+        gap: 4px;
+      }
+      .diet-btn {
+        padding: 5px 8px;
+        font-size: 10.5px;
+        border-radius: 8px;
+        gap: 4px;
+      }
+      .diet-icon {
+        width: 9px;
+        height: 9px;
+      }
+      .diet-icon::after {
+        width: 3.5px;
+        height: 3.5px;
+      }
+
+      .category-pills {
+        gap: 5px;
+        padding-bottom: 1px;
+      }
+      .pill-btn {
+        padding: 4px 10px;
+        font-size: 10.5px;
+        gap: 4px;
+      }
+      .pill-btn svg {
+        width: 11px;
+        height: 11px;
+      }
+
+      .menu-main {
+        padding: 2px 8px 50px;
+      }
+      .category-section-title {
+        margin: 6px 0 5px;
+        font-size: 13px;
+        padding-bottom: 3px;
+      }
+      .title-left {
+        gap: 6px;
+      }
+      .title-left svg {
+        width: 14px;
+        height: 14px;
+      }
+      .category-count {
+        font-size: 9.5px;
+        padding: 2px 7px;
+      }
+
+      .menu-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+      .card-media {
+        aspect-ratio: 9 / 16;
+        max-height: 190px;
+      }
+      .card-body {
+        padding: 7px 8px 8px;
+      }
+      .card-title-row {
+        margin-bottom: 3px;
+        gap: 4px;
+      }
+      .item-name {
+        font-size: 12px;
+        line-height: 1.2;
+      }
+      .item-price {
+        font-size: 13px;
+      }
+      .item-desc {
+        display: none;
+      }
+      .card-footer {
+        padding-top: 4px;
+        font-size: 10px;
+      }
+      .tap-hint {
+        font-size: 10px;
+      }
+      .serving-badge {
+        font-size: 9px;
+        padding: 2px 5px;
+        left: 4px;
+        bottom: 4px;
+        border-radius: 5px;
+      }
+      .serving-badge svg {
+        width: 10px;
+        height: 10px;
+      }
+      .bestseller-badge {
+        font-size: 8px;
+        padding: 2px 5px;
+        top: 4px;
+        right: 4px;
+        border-radius: 5px;
       }
     }
   </style>
@@ -1239,8 +1447,8 @@
        2. TOP MARKETING BANNER (Linkal Promotional CTA)
        ========================================================== -->
   <aside class="linkal-marketing-banner">
-    <span class="badge-pill">Powered by Linkal</span>
-    <span>Want your own free digital menu website?</span>
+    <span class="badge-pill">Powered by Linkal AI</span>
+    <span class="banner-text">Create your free instant digital menu in 30 seconds</span>
     <a href="https://linkal.in" target="_blank" rel="noopener">
       Get your free menu at linkal.in
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -1769,7 +1977,7 @@
                   class="card-img" 
                   src="${item.image}" 
                   alt="${item.name}" 
-                  loading="lazy" 
+                  decoding="async" 
                   onerror="this.onerror=null; this.src='${getPlaceholderImage(item.name)}';"
                 >
                 <div class="serving-badge">
@@ -1982,7 +2190,7 @@
     });
 
     // -------------------------------------------------------------
-    // 11. ENTRANCE ANIMATION
+    // 11. ENTRANCE ANIMATION & REAL IMAGE PRELOADER
     // -------------------------------------------------------------
     window.addEventListener("DOMContentLoaded", () => {
       renderMenu();
@@ -1991,21 +2199,57 @@
       const progressBar = document.getElementById("progress-bar");
       const progressLabel = document.getElementById("progress-label");
 
-      let progress = 0;
-      const interval = setInterval(() => {
-        progress += Math.floor(Math.random() * 18) + 12;
-        if (progress > 100) progress = 100;
+      // Collect all images to preload (branding + all 15 dish photos)
+      const imagesToPreload = [
+        "images/turkish_zaika_logo.svg",
+        ...MENU_DATA.map(item => item.image)
+      ];
 
-        progressBar.style.width = progress + "%";
-        progressLabel.innerText = `Preparing Menu Delicacies (${progress}%)...`;
+      let loadedCount = 0;
+      const totalCount = imagesToPreload.length;
+      let hasDismissed = false;
 
-        if (progress >= 100) {
-          clearInterval(interval);
-          setTimeout(() => {
-            overlay.classList.add("hidden");
-          }, 350);
-        }
-      }, 90);
+      function updateProgress() {
+        const percent = Math.min(100, Math.round((loadedCount / totalCount) * 100));
+        if (progressBar) progressBar.style.width = percent + "%";
+        if (progressLabel) progressLabel.innerText = `Fetching Fresh Delicacies (${loadedCount}/${totalCount})...`;
+      }
+
+      function dismissOverlay() {
+        if (hasDismissed) return;
+        hasDismissed = true;
+        if (progressBar) progressBar.style.width = "100%";
+        if (progressLabel) progressLabel.innerText = "Menu Ready • Enjoy Your Meal!";
+        setTimeout(() => {
+          overlay.classList.add("hidden");
+        }, 350);
+      }
+
+      // Safety timeout: dismiss after 4.5s max even on spotty mobile connection
+      const safetyTimeout = setTimeout(() => {
+        dismissOverlay();
+      }, 4500);
+
+      imagesToPreload.forEach(src => {
+        const img = new Image();
+        img.onload = () => {
+          loadedCount++;
+          updateProgress();
+          if (loadedCount >= totalCount) {
+            clearTimeout(safetyTimeout);
+            dismissOverlay();
+          }
+        };
+        img.onerror = () => {
+          loadedCount++;
+          updateProgress();
+          if (loadedCount >= totalCount) {
+            clearTimeout(safetyTimeout);
+            dismissOverlay();
+          }
+        };
+        img.src = src;
+      });
     });
   </script>
 </body>
