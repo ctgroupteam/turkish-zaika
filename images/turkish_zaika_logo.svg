@@ -1,59 +1,49 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 240" width="100%" height="100%">
-  <defs>
-    <filter id="neon-glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3" result="blur" />
-      <feMerge>
-        <feMergeNode in="blur" />
-        <feMergeNode in="SourceGraphic" />
-      </feMerge>
-    </filter>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 250" width="100%" height="100%">
+  <!-- Crisp Black Signboard Box -->
+  <rect width="460" height="250" rx="14" fill="#090a0f" stroke="#1c2130" stroke-width="2"/>
 
-  <!-- Background -->
-  <rect width="500" height="240" rx="16" fill="#0c0d12" />
-
-  <!-- TURKISH text -->
-  <text x="310" y="70" text-anchor="middle" font-family="'Plus Jakarta Sans', Impact, sans-serif" font-weight="900" font-size="52" fill="#ff2e2e" letter-spacing="4" filter="url(#neon-glow)">TURKISH</text>
+  <!-- TURKISH - Tall, Clean, High-Contrast Neon Red -->
+  <text x="280" y="74" text-anchor="middle" font-family="'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="46" fill="#ff2424" letter-spacing="6">TURKISH</text>
 
   <!-- Circular Badge: The Taste of Turkey -->
-  <g transform="translate(65, 85)">
-    <!-- Outer White Circle -->
-    <circle cx="45" cy="45" r="42" fill="#ffffff" stroke="#1f2430" stroke-width="4" />
-    <circle cx="45" cy="45" r="38" fill="none" stroke="#2b3142" stroke-width="1.5" stroke-dasharray="3,2" />
+  <g transform="translate(42, 90)">
+    <!-- White Circle -->
+    <circle cx="44" cy="44" r="40" fill="#ffffff" stroke="#1f2432" stroke-width="3"/>
+    <circle cx="44" cy="44" r="36" fill="none" stroke="#d1d5db" stroke-width="1.5" stroke-dasharray="2,2"/>
     
-    <!-- Top Arc Text: The Taste of Turkey -->
-    <path id="circleTop" d="M 12 45 A 33 33 0 0 1 78 45" fill="none" />
-    <text font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="7" font-weight="800" fill="#1e2230" letter-spacing="0.5">
-      <textPath href="#circleTop" startOffset="50%" text-anchor="middle">THE TASTE OF TURKEY</textPath>
+    <!-- Top Arc Text: THE TASTE OF TURKEY -->
+    <path id="badgeTop" d="M 12 44 A 32 32 0 0 1 76 44" fill="none"/>
+    <text font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="6.8" font-weight="800" fill="#111827" letter-spacing="0.4">
+      <textPath href="#badgeTop" startOffset="50%" text-anchor="middle">THE TASTE OF TURKEY</textPath>
     </text>
 
-    <!-- Center TZ Monogram -->
-    <text x="45" y="52" text-anchor="middle" font-family="'Cinzel', serif" font-weight="900" font-size="28" fill="#e11d48">TZ</text>
+    <!-- Center Stylized Monogram TZ -->
+    <text x="44" y="52" text-anchor="middle" font-family="'Cinzel', serif" font-weight="900" font-size="28" fill="#e11d48">TZ</text>
 
-    <!-- Bottom Arc Text: Family Restaurant -->
-    <path id="circleBottom" d="M 14 45 A 31 31 0 0 0 76 45" fill="none" />
-    <text font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="6.5" font-weight="800" fill="#1e2230" letter-spacing="0.5">
-      <textPath href="#circleBottom" startOffset="50%" text-anchor="middle">FAMILY RESTAURANT</textPath>
+    <!-- Bottom Arc Text: FAMILY RESTAURANT -->
+    <path id="badgeBottom" d="M 14 44 A 30 30 0 0 0 74 44" fill="none"/>
+    <text font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="6.2" font-weight="800" fill="#111827" letter-spacing="0.4">
+      <textPath href="#badgeBottom" startOffset="50%" text-anchor="middle">FAMILY RESTAURANT</textPath>
     </text>
   </g>
 
-  <!-- ZAIKA text -->
-  <text x="325" y="145" text-anchor="middle" font-family="'Plus Jakarta Sans', Impact, sans-serif" font-weight="900" font-size="58" fill="#ff2e2e" letter-spacing="5" filter="url(#neon-glow)">ZAIKA</text>
+  <!-- ZAIKA - Tall, Sharp, Clean Letterforms -->
+  <text x="295" y="146" text-anchor="middle" font-family="'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="52" fill="#ff2424" letter-spacing="8">ZAIKA</text>
 
-  <!-- Bottom Panel: Veg & Non Veg Family Restaurant -->
-  <g transform="translate(30, 175)">
-    <rect width="440" height="46" rx="8" fill="#08090d" stroke="#1f2533" stroke-width="1.5" />
+  <!-- Bottom Strip: VEG & NON VEG FAMILY RESTAURANT -->
+  <g transform="translate(24, 184)">
+    <rect width="412" height="46" rx="8" fill="#050608" stroke="#1f2738" stroke-width="1.5"/>
 
-    <!-- Veg Symbol (Left) -->
-    <rect x="18" y="11" width="24" height="24" fill="none" stroke="#10b981" stroke-width="2.5" rx="3" />
-    <circle cx="30" cy="23" r="6" fill="#10b981" />
+    <!-- Green Veg Symbol -->
+    <rect x="16" y="11" width="24" height="24" fill="none" stroke="#10b981" stroke-width="2.5" rx="3"/>
+    <circle cx="28" cy="23" r="6" fill="#10b981"/>
 
-    <!-- Subtitle Text -->
-    <text x="220" y="22" text-anchor="middle" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="14" fill="#34d399" letter-spacing="2">VEG &amp; NON VEG</text>
-    <text x="220" y="38" text-anchor="middle" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="800" font-size="11" fill="#38bdf8" letter-spacing="3">FAMILY RESTAURANT</text>
+    <!-- Center Text -->
+    <text x="206" y="22" text-anchor="middle" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="13" fill="#34d399" letter-spacing="2">VEG &amp; NON VEG</text>
+    <text x="206" y="38" text-anchor="middle" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="800" font-size="10.5" fill="#38bdf8" letter-spacing="3">FAMILY RESTAURANT</text>
 
-    <!-- Non-Veg Symbol (Right) -->
-    <rect x="398" y="11" width="24" height="24" fill="none" stroke="#ef4444" stroke-width="2.5" rx="3" />
-    <circle cx="410" cy="23" r="6" fill="#ef4444" />
+    <!-- Red Non-Veg Symbol -->
+    <rect x="372" y="11" width="24" height="24" fill="none" stroke="#ef4444" stroke-width="2.5" rx="3"/>
+    <circle cx="384" cy="23" r="6" fill="#ef4444"/>
   </g>
 </svg>

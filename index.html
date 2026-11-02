@@ -13,7 +13,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <!-- Standalone QRCode.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
@@ -279,25 +279,162 @@
     }
 
     .hero-signboard-wrapper {
-      max-width: 320px;
-      width: 90%;
+      max-width: 360px;
+      width: 100%;
       margin: 0 auto 18px;
-      background: #08090d;
-      border-radius: 16px;
-      padding: 8px;
-      box-shadow: 0 12px 32px rgba(15, 29, 56, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.06);
-      transition: transform 0.3s ease;
     }
 
-    .hero-signboard-wrapper:hover {
+    .signboard-neon-box {
+      background: #08090e;
+      border: 2px solid #1a2233;
+      border-radius: 16px;
+      padding: 18px 20px 14px;
+      box-shadow: 0 12px 32px rgba(15, 29, 56, 0.18), inset 0 0 25px rgba(0, 0, 0, 0.9);
+      text-align: center;
+      position: relative;
+      user-select: none;
+      transition: transform 0.25s ease;
+    }
+
+    .signboard-neon-box:hover {
       transform: scale(1.02);
     }
 
-    .hero-signboard-wrapper img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 10px;
+    .neon-turkish {
+      font-family: 'Bebas Neue', 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(38px, 9vw, 54px);
+      line-height: 0.95;
+      letter-spacing: 6px;
+      color: #ff2e2e;
+      text-shadow: 0 0 10px rgba(255, 46, 46, 0.45);
+      font-weight: 400;
+      margin-bottom: 4px;
+      padding-left: 6px;
+    }
+
+    .zaika-badge-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .signboard-badge-circle {
+      width: 58px;
+      height: 58px;
+      background: #ffffff;
+      border-radius: 50%;
+      border: 2.5px solid #1f2533;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      flex-shrink: 0;
+      padding: 3px;
+    }
+
+    .badge-arc-top {
+      font-size: 5px;
+      font-weight: 900;
+      letter-spacing: 0.2px;
+      color: #111827;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .badge-tz {
+      font-family: 'Cinzel', serif;
+      font-size: 20px;
+      font-weight: 900;
+      color: #e11d48;
+      line-height: 1;
+      margin: 1px 0;
+    }
+
+    .badge-arc-bot {
+      font-size: 4.8px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      color: #111827;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .neon-zaika {
+      font-family: 'Bebas Neue', 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(48px, 11vw, 68px);
+      line-height: 0.95;
+      letter-spacing: 8px;
+      color: #ff2e2e;
+      text-shadow: 0 0 12px rgba(255, 46, 46, 0.45);
+      font-weight: 400;
+      padding-left: 8px;
+    }
+
+    .signboard-bottom-bar {
+      background: #040507;
+      border: 1.5px solid #1a2233;
+      border-radius: 8px;
+      padding: 7px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .symbol-box {
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .symbol-box.veg-symbol {
+      border: 2px solid #10b981;
+    }
+
+    .symbol-box.veg-symbol .symbol-dot {
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+    }
+
+    .symbol-box.nonveg-symbol {
+      border: 2px solid #ef4444;
+    }
+
+    .symbol-box.nonveg-symbol .symbol-dot {
+      width: 8px;
+      height: 8px;
+      background: #ef4444;
+      border-radius: 50%;
+    }
+
+    .bar-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.15;
+    }
+
+    .bar-title {
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #34d399;
+      text-transform: uppercase;
+    }
+
+    .bar-sub {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2.5px;
+      color: #38bdf8;
+      text-transform: uppercase;
     }
 
     .location-info {
@@ -1067,8 +1204,26 @@
        ========================================================== -->
   <div id="loading-overlay">
     <div class="loader-box">
-      <div class="loader-logo-wrapper">
-        <img src="images/turkish_zaika_logo.svg" alt="Turkish Zaika Restaurant Logo">
+      <div class="hero-signboard-wrapper" style="max-width: 300px; margin-bottom: 20px;">
+        <div class="signboard-neon-box" style="padding: 14px 16px 10px;">
+          <div class="neon-turkish" style="font-size: 40px; letter-spacing: 5px;">TURKISH</div>
+          <div class="zaika-badge-row" style="margin-bottom: 10px; gap: 10px;">
+            <div class="signboard-badge-circle" style="width: 48px; height: 48px;">
+              <span class="badge-arc-top" style="font-size: 4.2px;">THE TASTE OF TURKEY</span>
+              <span class="badge-tz" style="font-size: 17px;">TZ</span>
+              <span class="badge-arc-bot" style="font-size: 4px;">FAMILY RESTAURANT</span>
+            </div>
+            <div class="neon-zaika" style="font-size: 50px; letter-spacing: 6px;">ZAIKA</div>
+          </div>
+          <div class="signboard-bottom-bar" style="padding: 5px 10px;">
+            <span class="symbol-box veg-symbol" style="width: 18px; height: 18px;"><span class="symbol-dot" style="width: 6px; height: 6px;"></span></span>
+            <div class="bar-text">
+              <span class="bar-title" style="font-size: 10px; letter-spacing: 1.5px;">VEG &amp; NON VEG</span>
+              <span class="bar-sub" style="font-size: 8.5px; letter-spacing: 2px;">FAMILY RESTAURANT</span>
+            </div>
+            <span class="symbol-box nonveg-symbol" style="width: 18px; height: 18px;"><span class="symbol-dot" style="width: 6px; height: 6px;"></span></span>
+          </div>
+        </div>
       </div>
       <div class="welcome-text">Welcome to</div>
       <div class="city-subtitle">Solapur • Authentic Menu</div>
@@ -1114,7 +1269,25 @@
        ========================================================== -->
   <header class="header-hero">
     <div class="hero-signboard-wrapper">
-      <img src="images/turkish_zaika_logo.svg" alt="Turkish Zaika Restaurant Solapur">
+      <div class="signboard-neon-box">
+        <div class="neon-turkish">TURKISH</div>
+        <div class="zaika-badge-row">
+          <div class="signboard-badge-circle">
+            <span class="badge-arc-top">THE TASTE OF TURKEY</span>
+            <span class="badge-tz">TZ</span>
+            <span class="badge-arc-bot">FAMILY RESTAURANT</span>
+          </div>
+          <div class="neon-zaika">ZAIKA</div>
+        </div>
+        <div class="signboard-bottom-bar">
+          <span class="symbol-box veg-symbol"><span class="symbol-dot"></span></span>
+          <div class="bar-text">
+            <span class="bar-title">VEG &amp; NON VEG</span>
+            <span class="bar-sub">FAMILY RESTAURANT</span>
+          </div>
+          <span class="symbol-box nonveg-symbol"><span class="symbol-dot"></span></span>
+        </div>
+      </div>
     </div>
 
     <div class="location-info">
