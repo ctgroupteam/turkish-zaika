@@ -1635,7 +1635,9 @@
         </div>
         <p class="qr-card-sub">Solapur • Contactless Digital Menu</p>
         
-        <div id="qrcode-canvas-container"></div>
+        <div id="qrcode-canvas-container">
+          <img id="turkish-zaika-qr-img" src="images/turkish_zaika_qr.png" alt="Turkish Zaika Contactless Menu QR" width="190" height="190" decoding="async">
+        </div>
 
         <p class="qr-card-footer">Scan to view: turkishzaika.linkal.in</p>
       </div>
@@ -2078,22 +2080,12 @@
     const qrModal = document.getElementById("qr-modal");
     const openQrBtn = document.getElementById("open-qr-btn");
     const qrCloseBtn = document.getElementById("qr-close-btn");
-    const qrCanvasContainer = document.getElementById("qrcode-canvas-container");
-    let qrInstance = null;
+    const QR_IMAGE_SRC = "images/turkish_zaika_qr.png";
+    const preloadedQrImage = new Image();
+    preloadedQrImage.src = QR_IMAGE_SRC;
 
     openQrBtn.addEventListener("click", () => {
       qrModal.classList.add("open");
-      if (!qrInstance) {
-        qrCanvasContainer.innerHTML = "";
-        qrInstance = new QRCode(qrCanvasContainer, {
-          text: MENU_URL,
-          width: 190,
-          height: 190,
-          colorDark: "#0f1d38",
-          colorLight: "#ffffff",
-          correctLevel: QRCode.CorrectLevel.H
-        });
-      }
     });
 
     qrCloseBtn.addEventListener("click", () => qrModal.classList.remove("open"));
@@ -2103,9 +2095,6 @@
 
     // Download Printable Table QR Image
     document.getElementById("download-qr-btn").addEventListener("click", () => {
-      const qrImg = qrCanvasContainer.querySelector("img") || qrCanvasContainer.querySelector("canvas");
-      if (!qrImg) return;
-
       const canvas = document.createElement("canvas");
       canvas.width = 600;
       canvas.height = 760;
@@ -2131,8 +2120,8 @@
       ctx.fillText("SOLAPUR • CONTACTLESS DIGITAL MENU", canvas.width / 2, 120);
 
       // Draw QR Code
-      const drawQR = () => {
-        ctx.drawImage(qrImg, 140, 160, 320, 320);
+      const drawQR = (qrImgToDraw) => {
+        ctx.drawImage(qrImgToDraw, 140, 160, 320, 320);
 
         ctx.fillStyle = "#111827";
         ctx.font = "bold 20px 'Plus Jakarta Sans', sans-serif";
@@ -2150,16 +2139,35 @@
         ctx.font = "12px 'Plus Jakarta Sans', sans-serif";
         ctx.fillText("Powered by Linkal AI", canvas.width / 2, 700);
 
-        const a = document.createElement("a");
-        a.download = "Turkish-Zaika-Table-QR.png";
-        a.href = canvas.toDataURL("image/png");
-        a.click();
+        function triggerDownload(url) {
+          const a = document.createElement("a");
+          a.download = "Turkish-Zaika-Table-QR.png";
+          a.href = url;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }
+
+        if (canvas.toBlob) {
+          canvas.toBlob((blob) => {
+            if (blob) {
+              const blobUrl = URL.createObjectURL(blob);
+              triggerDownload(blobUrl);
+              setTimeout(() => URL.revokeObjectURL(blobUrl), 2000);
+            } else {
+              triggerDownload(canvas.toDataURL("image/png"));
+            }
+          }, "image/png");
+        } else {
+          triggerDownload(canvas.toDataURL("image/png"));
+        }
       };
 
-      if (qrImg.complete || qrImg instanceof HTMLCanvasElement) {
-        drawQR();
+      const domQr = document.getElementById("turkish-zaika-qr-img") || preloadedQrImage;
+      if (domQr.complete && domQr.naturalWidth > 0) {
+        drawQR(domQr);
       } else {
-        qrImg.onload = drawQR;
+        domQr.onload = () => drawQR(domQr);
       }
     });
 
@@ -2199,9 +2207,10 @@
       const progressBar = document.getElementById("progress-bar");
       const progressLabel = document.getElementById("progress-label");
 
-      // Collect all images to preload (branding + all 15 dish photos)
+      // Collect all images to preload (branding + dedicated QR + all 15 dish photos)
       const imagesToPreload = [
         "images/turkish_zaika_logo.svg",
+        "images/turkish_zaika_qr.png",
         ...MENU_DATA.map(item => item.image)
       ];
 
