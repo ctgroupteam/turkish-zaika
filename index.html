@@ -1403,6 +1403,441 @@
         border-radius: 5px;
       }
     }
+
+    /* ==========================================================
+       11. OWNER ADMIN MODE, PIN UNLOCK & CRUD EDITOR STYLES
+       ========================================================== */
+    #tz-secret-banner {
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+      touch-action: manipulation;
+    }
+
+    body.admin-mode-active {
+      padding-bottom: 84px;
+    }
+
+    .tz-toast {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-80px);
+      background: #0f1d38;
+      color: #ffffff;
+      border: 1px solid rgba(251, 191, 36, 0.45);
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      z-index: 25000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+      max-width: 92vw;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .tz-toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+    .tz-toast.success { background: #065f46; border-color: #34d399; }
+    .tz-toast.error { background: #991b1b; border-color: #f87171; }
+
+    /* Floating Bottom Admin Toolbar */
+    .tz-admin-bar {
+      position: fixed;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120px);
+      width: min(94vw, 620px);
+      background: rgba(15, 29, 56, 0.96);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1.5px solid rgba(251, 191, 36, 0.45);
+      border-radius: 18px;
+      padding: 10px 14px;
+      z-index: 9500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      color: #ffffff;
+    }
+    .tz-admin-bar.active {
+      transform: translateX(-50%) translateY(0);
+    }
+    .admin-bar-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      font-weight: 700;
+    }
+    .admin-pulse-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.28);
+    }
+    .admin-bar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .admin-bar-btn {
+      border: none;
+      border-radius: 10px;
+      padding: 8px 13px;
+      font-size: 12.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: inherit;
+      transition: transform 0.15s ease, opacity 0.2s ease;
+    }
+    .admin-bar-btn:active { transform: scale(0.96); }
+    .admin-btn-add-primary {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #0f1d38;
+    }
+    .admin-btn-exit {
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Card Admin Overlays */
+    .item-card.admin-editable {
+      border: 1.5px dashed rgba(217, 119, 6, 0.75);
+      cursor: default;
+    }
+    .admin-photo-edit-btn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(15, 29, 56, 0.88);
+      color: #fbbf24;
+      border: 1px solid rgba(251, 191, 36, 0.55);
+      border-radius: 9px;
+      padding: 6px 9px;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 6;
+      backdrop-filter: blur(6px);
+      font-family: inherit;
+    }
+    .admin-card-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      padding-top: 8px;
+      margin-top: 6px;
+      border-top: 1px dashed var(--border-color);
+    }
+    .admin-action-btn {
+      border: none;
+      border-radius: 8px;
+      padding: 7px 8px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      font-family: inherit;
+      transition: opacity 0.2s ease, transform 0.15s ease;
+    }
+    .admin-action-btn:active { transform: scale(0.96); }
+    .admin-action-edit {
+      background: rgba(15, 29, 56, 0.1);
+      color: var(--navy-deep);
+      border: 1px solid rgba(15, 29, 56, 0.2);
+    }
+    [data-theme="dark"] .admin-action-edit {
+      background: rgba(251, 191, 36, 0.15);
+      color: #fbbf24;
+      border-color: rgba(251, 191, 36, 0.35);
+    }
+    .admin-action-delete {
+      background: rgba(225, 29, 72, 0.12);
+      color: #e11d48;
+      border: 1px solid rgba(225, 29, 72, 0.25);
+    }
+
+    .admin-add-card {
+      border: 2px dashed rgba(217, 119, 6, 0.55);
+      border-radius: 18px;
+      background: rgba(245, 158, 11, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 210px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      gap: 10px;
+      color: var(--text-primary);
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .admin-add-card:hover {
+      background: rgba(245, 158, 11, 0.12);
+      transform: translateY(-2px);
+    }
+    .admin-add-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #0f1d38;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 800;
+      box-shadow: 0 6px 16px rgba(217, 119, 6, 0.3);
+    }
+
+    /* PIN Unlock Modal */
+    .pin-modal-box {
+      max-width: 360px;
+      padding: 28px 24px 24px;
+      text-align: center;
+    }
+    .pin-lock-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: rgba(15, 29, 56, 0.08);
+      color: var(--navy-deep);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    [data-theme="dark"] .pin-lock-icon {
+      background: rgba(251, 191, 36, 0.15);
+      color: #fbbf24;
+    }
+    .pin-boxes {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 18px 0 12px;
+    }
+    .pin-digit-input {
+      width: 54px;
+      height: 60px;
+      border-radius: 14px;
+      border: 2px solid var(--border-color);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 24px;
+      font-weight: 800;
+      text-align: center;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-text-security: disc;
+    }
+    .pin-digit-input:focus {
+      border-color: #d97706;
+      box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2);
+    }
+    .pin-boxes.shake {
+      animation: pinShake 0.38s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+    @keyframes pinShake {
+      10%, 90% { transform: translateX(-3px); }
+      20%, 80% { transform: translateX(5px); }
+      30%, 50%, 70% { transform: translateX(-6px); }
+      40%, 60% { transform: translateX(6px); }
+    }
+    .pin-error-msg {
+      color: #e11d48;
+      font-size: 12.5px;
+      font-weight: 700;
+      min-height: 18px;
+      margin-bottom: 12px;
+    }
+
+    /* Dish CRUD Editor Modal */
+    .crud-modal-box {
+      max-width: 470px;
+      padding: 22px;
+    }
+    .crud-header {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      padding-right: 36px;
+      color: var(--text-primary);
+      font-family: var(--font-heading);
+    }
+    .crud-photo-dropzone {
+      position: relative;
+      width: 100%;
+      height: 180px;
+      border-radius: 16px;
+      border: 2px dashed var(--border-color);
+      background: var(--bg-card-subtle);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .crud-photo-dropzone img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .crud-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 29, 56, 0.45);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 12.5px;
+      font-weight: 700;
+      gap: 6px;
+      text-align: center;
+      padding: 12px;
+    }
+    .crud-compression-badge {
+      display: none;
+      font-size: 11px;
+      font-weight: 700;
+      color: #059669;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 8px;
+      padding: 5px 10px;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .crud-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .crud-form-group {
+      margin-bottom: 11px;
+    }
+    .crud-label {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+    .crud-input, .crud-select, .crud-textarea {
+      width: 100%;
+      padding: 9px 11px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border-color);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 13px;
+      outline: none;
+    }
+    .crud-input:focus, .crud-select:focus, .crud-textarea:focus {
+      border-color: #d97706;
+    }
+    .crud-diet-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .crud-diet-opt {
+      padding: 8px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border-color);
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-family: inherit;
+    }
+    .crud-diet-opt.active.veg {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.12);
+      color: #059669;
+    }
+    .crud-diet-opt.active.nonveg {
+      border-color: #e11d48;
+      background: rgba(225, 29, 72, 0.12);
+      color: #e11d48;
+    }
+    .crud-primary-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #0f1d38, #1a2f55);
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    [data-theme="dark"] .crud-primary-btn {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #0f1d38;
+    }
+    .crud-primary-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 640px) {
+      .tz-admin-bar {
+        padding: 8px 10px;
+        bottom: 10px;
+      }
+      .admin-bar-status span {
+        display: none;
+      }
+      .admin-bar-btn {
+        padding: 8px 11px;
+        font-size: 12px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1476,7 +1911,7 @@
        4. RESTAURANT HERO HEADER (Using Exact Signboard Logo)
        ========================================================== -->
   <header class="header-hero">
-    <div class="hero-signboard-wrapper">
+    <div class="hero-signboard-wrapper" id="tz-secret-banner" title="Turkish Zaika • Double-tap for Owner Menu Editor">
       <div class="signboard-neon-box">
         <div class="neon-turkish">TURKISH</div>
         <div class="zaika-badge-row">
@@ -1563,7 +1998,7 @@
       <nav class="category-pills" id="category-pills">
         <button class="pill-btn active" data-category="all">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          All Dishes (15)
+          All Dishes (<span id="all-dishes-count">15</span>)
         </button>
         <button class="pill-btn" data-category="mandi">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a9 9 0 0 0-9 9v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a9 9 0 0 0-9-9Z"/><path d="M7 14h10"/></svg>
@@ -1657,6 +2092,160 @@
   </div>
 
   <!-- ==========================================================
+       8B. SECRET OWNER PIN MODAL
+       ========================================================== -->
+  <div class="modal-overlay" id="pin-modal">
+    <div class="modal-content pin-modal-box">
+      <button class="modal-close-btn" id="pin-close-btn">&times;</button>
+      <div class="pin-lock-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <h3 style="font-size: 18px; font-weight: 800; color: var(--text-primary);">Owner Menu Access</h3>
+      <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px;">Enter 4-digit security PIN to edit dishes, prices &amp; photos</p>
+
+      <div class="pin-boxes" id="pin-boxes">
+        <input type="tel" inputmode="numeric" maxlength="1" class="pin-digit-input" data-idx="0" autocomplete="off">
+        <input type="tel" inputmode="numeric" maxlength="1" class="pin-digit-input" data-idx="1" autocomplete="off">
+        <input type="tel" inputmode="numeric" maxlength="1" class="pin-digit-input" data-idx="2" autocomplete="off">
+        <input type="tel" inputmode="numeric" maxlength="1" class="pin-digit-input" data-idx="3" autocomplete="off">
+      </div>
+      <div class="pin-error-msg" id="pin-error-msg"></div>
+
+      <button class="crud-primary-btn" id="pin-submit-btn">Unlock Menu Editor</button>
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       8C. ADD / EDIT DISH MODAL (CRUD + GALLERY UPLOAD + COMPRESSOR)
+       ========================================================== -->
+  <div class="modal-overlay" id="dish-editor-modal">
+    <div class="modal-content crud-modal-box">
+      <button class="modal-close-btn" id="editor-close-btn">&times;</button>
+      <h3 class="crud-header" id="editor-modal-title">Add New Dish</h3>
+
+      <input type="file" id="dish-file-input" accept="image/*" style="display: none;">
+      <div class="crud-photo-dropzone" id="crud-photo-dropzone">
+        <img id="editor-photo-preview" src="" alt="" style="display: none;">
+        <div class="crud-photo-overlay" id="editor-photo-overlay">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+          </svg>
+          <span>Tap to Pick Photo from Gallery</span>
+          <span style="font-size: 10.5px; opacity: 0.85; font-weight: 500;">Auto-compressed 99% to WebP for instant loading</span>
+        </div>
+      </div>
+      <div class="crud-compression-badge" id="editor-compression-badge"></div>
+      <div style="display: flex; justify-content: flex-end; margin-bottom: 10px;">
+        <button type="button" id="editor-remove-photo-btn" class="admin-action-btn admin-action-delete" style="display: none; padding: 5px 10px; font-size: 11px;">
+          Remove Photo
+        </button>
+      </div>
+
+      <form id="dish-editor-form">
+        <div class="crud-form-group">
+          <label class="crud-label">Dish Name *</label>
+          <input type="text" id="edit-name" class="crud-input" placeholder="e.g. Special Turkish Chicken Shawarma" required>
+        </div>
+
+        <div class="crud-form-grid">
+          <div class="crud-form-group">
+            <label class="crud-label">Price (₹) *</label>
+            <input type="number" id="edit-price" class="crud-input" placeholder="e.g. 280" min="0" required>
+          </div>
+          <div class="crud-form-group">
+            <label class="crud-label">Category *</label>
+            <select id="edit-category" class="crud-select">
+              <option value="mandi">Arabian Mandi &amp; Feasts</option>
+              <option value="kebabs">Kebabs, Platters &amp; Seafood</option>
+              <option value="curries">Royal Gravies</option>
+              <option value="desserts">Turkish Desserts</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="crud-form-grid">
+          <div class="crud-form-group">
+            <label class="crud-label">Diet Type</label>
+            <div class="crud-diet-toggle">
+              <button type="button" class="crud-diet-opt nonveg active" data-val="nonveg">
+                <span class="diet-icon" style="color: var(--red-brand);"></span> Non-Veg
+              </button>
+              <button type="button" class="crud-diet-opt veg" data-val="veg">
+                <span class="diet-icon" style="color: var(--green-veg);"></span> Veg
+              </button>
+            </div>
+          </div>
+          <div class="crud-form-group">
+            <label class="crud-label">Portion Size</label>
+            <input type="text" id="edit-portion" class="crud-input" placeholder="e.g. Serves 2 Persons">
+          </div>
+        </div>
+
+        <div class="crud-form-group">
+          <label class="crud-label">Description</label>
+          <textarea id="edit-desc" class="crud-textarea" rows="2" placeholder="Describe spices, preparation & ingredients..."></textarea>
+        </div>
+
+        <div class="crud-form-grid" style="align-items: center;">
+          <div class="crud-form-group">
+            <label class="crud-label">Tags (comma separated)</label>
+            <input type="text" id="edit-tags" class="crud-input" placeholder="Chef Choice, Charcoal Grilled">
+          </div>
+          <div class="crud-form-group" style="display: flex; align-items: center; gap: 8px; padding-top: 16px;">
+            <input type="checkbox" id="edit-bestseller" style="width: 18px; height: 18px; accent-color: #d97706;">
+            <label for="edit-bestseller" class="crud-label" style="margin: 0; cursor: pointer;">Chef Choice Badge</label>
+          </div>
+        </div>
+
+        <button type="submit" class="crud-primary-btn" id="editor-save-btn">Save &amp; Publish Live</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       8D. DELETE CONFIRMATION MODAL
+       ========================================================== -->
+  <div class="modal-overlay" id="confirm-delete-modal">
+    <div class="modal-content" style="max-width: 360px; padding: 24px; text-align: center;">
+      <button class="modal-close-btn" id="delete-close-btn">&times;</button>
+      <div style="width: 48px; height: 48px; border-radius: 50%; background: rgba(225,29,72,0.12); color: #e11d48; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+        </svg>
+      </div>
+      <h3 style="font-size: 17px; font-weight: 800; color: var(--text-primary);">Delete Dish?</h3>
+      <p id="delete-dish-label" style="font-size: 13px; color: var(--text-secondary); margin: 8px 0 18px;"></p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <button type="button" id="cancel-delete-btn" class="admin-action-btn admin-action-edit" style="padding: 11px;">Cancel</button>
+        <button type="button" id="confirm-delete-btn" class="admin-action-btn admin-action-delete" style="padding: 11px; background: #e11d48; color: #fff; border: none;">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Card Image Upload Input -->
+  <input type="file" id="quick-card-photo-input" accept="image/*" style="display: none;">
+
+  <!-- Floating Owner Mode Bar -->
+  <div class="tz-admin-bar" id="tz-admin-bar">
+    <div class="admin-bar-status">
+      <span class="admin-pulse-dot"></span>
+      <span>Owner Edit Mode</span>
+    </div>
+    <div class="admin-bar-actions">
+      <button type="button" class="admin-bar-btn admin-btn-add-primary" id="admin-add-dish-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add Dish
+      </button>
+      <button type="button" class="admin-bar-btn admin-btn-exit" id="admin-exit-btn">Exit</button>
+    </div>
+  </div>
+
+  <!-- Toast Feedback -->
+  <div class="tz-toast" id="tz-toast"></div>
+
+  <!-- ==========================================================
        9. CLEAN FOOTER (Without local cache text)
        ========================================================== -->
   <footer>
@@ -1697,9 +2286,9 @@
     });
 
     // -------------------------------------------------------------
-    // Menu Database: Turkish Zaika Solapur (15 Dishes in 9:16)
+    // Menu Database: Turkish Zaika Solapur (Live Supabase Sync + Fallback)
     // -------------------------------------------------------------
-    const MENU_DATA = [
+    const DEFAULT_MENU_DATA = [
       // Category: Mandi & Feasts
       {
         id: "tz-alfaham-mandi",
@@ -1889,10 +2478,46 @@
       }
     ];
 
+    function loadCachedMenu() {
+      try {
+        const raw = localStorage.getItem("tz_cached_menu_v1");
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch (e) {}
+      return null;
+    }
+
+    let MENU_DATA = loadCachedMenu() || JSON.parse(JSON.stringify(DEFAULT_MENU_DATA));
+    let isAdminMode = false;
+    let adminToken = sessionStorage.getItem("tz_admin_token") || "";
+
     let activeCategory = "all";
     let activeDiet = "all";
     let searchQuery = "";
     const MENU_URL = "https://turkishzaika.linkal.in";
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    let toastTimer = null;
+    function showToast(msg, type = "") {
+      const toast = document.getElementById("tz-toast");
+      if (!toast) return;
+      toast.textContent = msg;
+      toast.className = `tz-toast ${type} show`;
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3200);
+    }
 
     // Fallback Placeholder SVG
     function getPlaceholderImage(name) {
@@ -1900,22 +2525,26 @@
     }
 
     // -------------------------------------------------------------
-    // Render Menu Items (9:16 Cards)
+    // Render Menu Items (9:16 Cards + Owner Edit Mode)
     // -------------------------------------------------------------
     const menuContainer = document.getElementById("menu-container");
 
     function renderMenu() {
+      const countEl = document.getElementById("all-dishes-count");
+      if (countEl) countEl.textContent = MENU_DATA.length;
+
       const filtered = MENU_DATA.filter(item => {
         const matchesCategory = (activeCategory === "all") || (item.category === activeCategory);
         const matchesDiet = (activeDiet === "all") || (item.diet === activeDiet);
+        const tagsArr = Array.isArray(item.tags) ? item.tags : [];
         const matchesSearch = !searchQuery || 
-          item.name.toLowerCase().includes(searchQuery) || 
-          item.desc.toLowerCase().includes(searchQuery) ||
-          item.tags.some(t => t.toLowerCase().includes(searchQuery));
+          String(item.name || "").toLowerCase().includes(searchQuery) || 
+          String(item.desc || "").toLowerCase().includes(searchQuery) ||
+          tagsArr.some(t => String(t).toLowerCase().includes(searchQuery));
         return matchesCategory && matchesDiet && matchesSearch;
       });
 
-      if (filtered.length === 0) {
+      if (filtered.length === 0 && !isAdminMode) {
         menuContainer.innerHTML = `
           <div style="text-align: center; padding: 60px 20px; color: var(--text-muted);">
             <svg style="width: 48px; height: 48px; margin: 0 auto 12px; opacity: 0.5;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1953,8 +2582,9 @@
       ];
 
       categories.forEach(cat => {
+        if (activeCategory !== "all" && activeCategory !== cat.id) return;
         const catItems = filtered.filter(i => i.category === cat.id);
-        if (catItems.length === 0) return;
+        if (catItems.length === 0 && !isAdminMode) return;
 
         html += `
           <div class="category-section-title">
@@ -1970,21 +2600,31 @@
         catItems.forEach(item => {
           const dietColor = item.diet === "veg" ? "var(--green-veg)" : "var(--red-brand)";
           const dietLabel = item.diet === "veg" ? "Veg" : "Non-Veg";
+          const safeId = escapeHtml(item.id);
+          const safeName = escapeHtml(item.name);
+          const safePortion = escapeHtml(item.portion || "Serves 1-2");
+          const safeDesc = escapeHtml(item.desc || "");
+          const safeImg = item.image ? escapeHtml(item.image) : getPlaceholderImage(item.name);
 
           html += `
-            <article class="item-card" data-id="${item.id}" onclick="openItemModal('${item.id}')">
-              <!-- 9:16 Aspect Ratio Photo Container -->
+            <article class="item-card ${isAdminMode ? 'admin-editable' : ''}" data-id="${safeId}" ${!isAdminMode ? `onclick="openItemModal('${safeId}')"` : ''}>
               <div class="card-media">
                 <img 
                   class="card-img" 
-                  src="${item.image}" 
-                  alt="${item.name}" 
+                  src="${safeImg}" 
+                  alt="${safeName}" 
                   decoding="async" 
                   onerror="this.onerror=null; this.src='${getPlaceholderImage(item.name)}';"
                 >
+                ${isAdminMode ? `
+                  <button type="button" class="admin-photo-edit-btn" onclick="triggerQuickPhotoSwap(event, '${safeId}')" title="Change dish photo from gallery">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                    Photo
+                  </button>
+                ` : ''}
                 <div class="serving-badge">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                  <span>${item.portion}</span>
+                  <span>${safePortion}</span>
                 </div>
                 ${item.bestseller ? '<div class="bestseller-badge">Chef Choice</div>' : ''}
               </div>
@@ -1992,22 +2632,45 @@
                 <div class="card-title-row">
                   <div style="display: flex; align-items: center; gap: 7px;">
                     <span class="diet-icon" style="color: ${dietColor};"></span>
-                    <h3 class="item-name">${item.name}</h3>
+                    <h3 class="item-name">${safeName}</h3>
                   </div>
-                  <span class="item-price">₹${item.price}</span>
+                  <span class="item-price">₹${Number(item.price || 0)}</span>
                 </div>
-                <p class="item-desc">${item.desc}</p>
-                <div class="card-footer">
-                  <span style="font-weight: 600;">${dietLabel}</span>
-                  <span class="tap-hint">
-                    Details
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                  </span>
-                </div>
+                <p class="item-desc">${safeDesc}</p>
+                ${isAdminMode ? `
+                  <div class="admin-card-actions">
+                    <button type="button" class="admin-action-btn admin-action-edit" onclick="openDishEditor('${safeId}')">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                      Edit
+                    </button>
+                    <button type="button" class="admin-action-btn admin-action-delete" onclick="openDeleteConfirm('${safeId}')">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+                      Delete
+                    </button>
+                  </div>
+                ` : `
+                  <div class="card-footer">
+                    <span style="font-weight: 600;">${dietLabel}</span>
+                    <span class="tap-hint">
+                      Details
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </span>
+                  </div>
+                `}
               </div>
             </article>
           `;
         });
+
+        if (isAdminMode) {
+          html += `
+            <div class="admin-add-card" onclick="openDishEditor(null, '${cat.id}')">
+              <div class="admin-add-circle">+</div>
+              <div style="font-weight: 800; font-size: 13.5px;">Add New Dish</div>
+              <div style="font-size: 11px; color: var(--text-muted);">to ${cat.title}</div>
+            </div>
+          `;
+        }
 
         html += `</div>`;
       });
@@ -2022,20 +2685,22 @@
     const modalCloseBtn = document.getElementById("modal-close-btn");
 
     window.openItemModal = function(id) {
+      if (isAdminMode) return;
       const item = MENU_DATA.find(i => i.id === id);
       if (!item) return;
 
-      document.getElementById("modal-img").src = item.image;
+      document.getElementById("modal-img").src = item.image || getPlaceholderImage(item.name);
       document.getElementById("modal-img").onerror = function() {
         this.src = getPlaceholderImage(item.name);
       };
       document.getElementById("modal-title").innerText = item.name;
-      document.getElementById("modal-price").innerText = "₹" + item.price;
-      document.getElementById("modal-portion").innerText = item.portion;
-      document.getElementById("modal-desc").innerText = item.desc;
+      document.getElementById("modal-price").innerText = "₹" + Number(item.price || 0);
+      document.getElementById("modal-portion").innerText = item.portion || "Serves 1 - 2 Persons";
+      document.getElementById("modal-desc").innerText = item.desc || "";
 
       const tagsContainer = document.getElementById("modal-tags");
-      tagsContainer.innerHTML = item.tags.map(tag => `<span class="modal-tag"># ${tag}</span>`).join("");
+      const tagsList = Array.isArray(item.tags) ? item.tags : [];
+      tagsContainer.innerHTML = tagsList.map(tag => `<span class="modal-tag"># ${escapeHtml(tag)}</span>`).join("");
 
       itemModal.classList.add("open");
     };
@@ -2198,24 +2863,606 @@
     });
 
     // -------------------------------------------------------------
-    // 11. ENTRANCE ANIMATION & REAL IMAGE PRELOADER
+    // 11. LIVE SUPABASE MENU SYNC & ENTRANCE PRELOADER
     // -------------------------------------------------------------
+    async function syncMenuFromSupabase() {
+      try {
+        const res = await fetch(`/api/menu?t=${Date.now()}`, { cache: "no-store" });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data?.ok && Array.isArray(data.menu)) {
+          MENU_DATA = data.menu;
+          try {
+            localStorage.setItem("tz_cached_menu_v1", JSON.stringify(MENU_DATA));
+          } catch (e) {}
+          renderMenu();
+        }
+      } catch (err) {
+        console.warn("Live menu sync note:", err);
+      }
+    }
+
+    async function saveMenuToSupabase() {
+      if (!adminToken) {
+        openPinModal();
+        return false;
+      }
+      try {
+        const res = await fetch("/api/menu", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${adminToken}`
+          },
+          body: JSON.stringify({ menu: MENU_DATA })
+        });
+        const data = await res.json();
+        if (res.status === 401) {
+          sessionStorage.removeItem("tz_admin_token");
+          adminToken = "";
+          showToast("Session expired — please re-enter PIN", "error");
+          openPinModal();
+          return false;
+        }
+        if (!res.ok || !data?.ok) {
+          throw new Error(data?.error || "Failed to save changes");
+        }
+        MENU_DATA = data.menu;
+        try {
+          localStorage.setItem("tz_cached_menu_v1", JSON.stringify(MENU_DATA));
+        } catch (e) {}
+        renderMenu();
+        return true;
+      } catch (err) {
+        showToast(err.message || "Error saving to Supabase", "error");
+        return false;
+      }
+    }
+
+    // -------------------------------------------------------------
+    // 12. SECRET DOUBLE-TAP TRIGGER & 4-DIGIT PIN VERIFICATION
+    // -------------------------------------------------------------
+    const secretBanner = document.getElementById("tz-secret-banner");
+    const pinModal = document.getElementById("pin-modal");
+    const pinInputs = Array.from(document.querySelectorAll(".pin-digit-input"));
+    const pinBoxesEl = document.getElementById("pin-boxes");
+    const pinErrorEl = document.getElementById("pin-error-msg");
+    const pinSubmitBtn = document.getElementById("pin-submit-btn");
+
+    function setAdminMode(enabled) {
+      isAdminMode = enabled;
+      const bar = document.getElementById("tz-admin-bar");
+      if (enabled) {
+        document.body.classList.add("admin-mode-active");
+        if (bar) bar.classList.add("active");
+      } else {
+        document.body.classList.remove("admin-mode-active");
+        if (bar) bar.classList.remove("active");
+      }
+      renderMenu();
+    }
+
+    function openPinModal() {
+      pinErrorEl.textContent = "";
+      pinInputs.forEach(inp => { inp.value = ""; });
+      pinModal.classList.add("open");
+      setTimeout(() => pinInputs[0]?.focus(), 120);
+    }
+
+    function closePinModal() {
+      pinModal.classList.remove("open");
+    }
+
+    document.getElementById("pin-close-btn").addEventListener("click", closePinModal);
+    pinModal.addEventListener("click", (e) => {
+      if (e.target === pinModal) closePinModal();
+    });
+
+    // Double-Click (Desktop) & Double-Tap (Mobile Touch)
+    let lastBannerTap = 0;
+    let suppressNextDblClick = false;
+
+    secretBanner.addEventListener("touchend", (e) => {
+      const now = Date.now();
+      if (now - lastBannerTap < 420) {
+        e.preventDefault();
+        suppressNextDblClick = true;
+        setTimeout(() => { suppressNextDblClick = false; }, 500);
+        if (!isAdminMode) openPinModal();
+        lastBannerTap = 0;
+      } else {
+        lastBannerTap = now;
+      }
+    }, { passive: false });
+
+    secretBanner.addEventListener("dblclick", (e) => {
+      if (suppressNextDblClick) return;
+      e.preventDefault();
+      if (!isAdminMode) openPinModal();
+    });
+
+    // PIN Digit Navigation & Auto-Submit
+    pinInputs.forEach((inp, idx) => {
+      inp.addEventListener("input", (e) => {
+        const clean = e.target.value.replace(/\D/g, "");
+        e.target.value = clean.slice(-1);
+        pinErrorEl.textContent = "";
+        if (clean && idx < pinInputs.length - 1) {
+          pinInputs[idx + 1].focus();
+        }
+        const fullPin = pinInputs.map(i => i.value).join("");
+        if (fullPin.length === 4) {
+          submitPin();
+        }
+      });
+
+      inp.addEventListener("keydown", (e) => {
+        if (e.key === "Backspace" && !inp.value && idx > 0) {
+          pinInputs[idx - 1].focus();
+          pinInputs[idx - 1].value = "";
+        } else if (e.key === "Enter") {
+          submitPin();
+        }
+      });
+
+      inp.addEventListener("paste", (e) => {
+        const pasted = (e.clipboardData || window.clipboardData).getData("text").replace(/\D/g, "");
+        if (pasted.length === 4) {
+          e.preventDefault();
+          pinInputs.forEach((box, i) => { box.value = pasted[i] || ""; });
+          submitPin();
+        }
+      });
+    });
+
+    async function submitPin() {
+      const pin = pinInputs.map(i => i.value).join("");
+      if (pin.length !== 4) {
+        pinErrorEl.textContent = "Please enter all 4 digits.";
+        return;
+      }
+      pinSubmitBtn.disabled = true;
+      pinSubmitBtn.textContent = "Verifying...";
+      pinErrorEl.textContent = "";
+
+      try {
+        const res = await fetch("/api/verify-pin", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ pin })
+        });
+        const data = await res.json();
+        if (!res.ok || !data?.ok || !data?.token) {
+          pinBoxesEl.classList.remove("shake");
+          void pinBoxesEl.offsetWidth;
+          pinBoxesEl.classList.add("shake");
+          pinErrorEl.textContent = data?.error || "Incorrect PIN. Try again.";
+          pinInputs.forEach(i => { i.value = ""; });
+          pinInputs[0].focus();
+        } else {
+          adminToken = data.token;
+          sessionStorage.setItem("tz_admin_token", adminToken);
+          closePinModal();
+          setAdminMode(true);
+          showToast("Owner Edit Mode Unlocked!", "success");
+        }
+      } catch (err) {
+        pinErrorEl.textContent = "Connection error. Please try again.";
+      } finally {
+        pinSubmitBtn.disabled = false;
+        pinSubmitBtn.textContent = "Unlock Menu Editor";
+      }
+    }
+
+    pinSubmitBtn.addEventListener("click", submitPin);
+
+    document.getElementById("admin-exit-btn").addEventListener("click", () => {
+      sessionStorage.removeItem("tz_admin_token");
+      adminToken = "";
+      setAdminMode(false);
+      showToast("Exited Owner Mode");
+    });
+
+    // -------------------------------------------------------------
+    // 13. CLIENT-SIDE 99% IMAGE COMPRESSOR (Canvas WebP / JPEG)
+    // -------------------------------------------------------------
+    function formatBytes(bytes) {
+      if (bytes < 1024) return bytes + " B";
+      if (bytes < 1024 * 1024) return Math.round(bytes / 1024) + " KB";
+      return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+    }
+
+    function compressImageToWebP(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onerror = () => reject(new Error("Could not read selected file"));
+        reader.onload = (ev) => {
+          const img = new Image();
+          img.onerror = () => reject(new Error("Invalid image file"));
+          img.onload = () => {
+            const MAX_DIM = 850;
+            let w = img.naturalWidth || img.width;
+            let h = img.naturalHeight || img.height;
+            if (w > MAX_DIM || h > MAX_DIM) {
+              if (w >= h) {
+                h = Math.round((h * MAX_DIM) / w);
+                w = MAX_DIM;
+              } else {
+                w = Math.round((w * MAX_DIM) / h);
+                h = MAX_DIM;
+              }
+            }
+
+            const canvas = document.createElement("canvas");
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, w, h);
+
+            let dataUrl = canvas.toDataURL("image/webp", 0.78);
+            // Fallback to JPEG if browser lacks WebP encoding
+            if (!dataUrl.startsWith("data:image/webp")) {
+              dataUrl = canvas.toDataURL("image/jpeg", 0.78);
+            }
+
+            // Step down quality slightly if still large
+            let estBytes = Math.round((dataUrl.length * 3) / 4);
+            if (estBytes > 120 * 1024) {
+              const mime = dataUrl.startsWith("data:image/webp") ? "image/webp" : "image/jpeg";
+              dataUrl = canvas.toDataURL(mime, 0.62);
+              estBytes = Math.round((dataUrl.length * 3) / 4);
+            }
+
+            const originalBytes = file.size || estBytes;
+            const savedPercent = Math.max(0, Math.min(99, Math.round((1 - estBytes / originalBytes) * 100)));
+            resolve({
+              base64: dataUrl,
+              originalBytes,
+              compressedBytes: estBytes,
+              savedPercent,
+              filename: file.name || "dish.webp"
+            });
+          };
+          img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function uploadCompressedImage(compressedResult) {
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${adminToken}`
+        },
+        body: JSON.stringify({
+          base64: compressedResult.base64,
+          filename: compressedResult.filename
+        })
+      });
+      const data = await res.json();
+      if (res.status === 401) {
+        sessionStorage.removeItem("tz_admin_token");
+        adminToken = "";
+        openPinModal();
+        throw new Error("Session expired — please re-enter PIN");
+      }
+      if (!res.ok || !data?.ok || !data?.url) {
+        throw new Error(data?.error || "Image upload failed");
+      }
+      return data.url;
+    }
+
+    // -------------------------------------------------------------
+    // 14. COMPLETE CRUD OPERATIONS (CREATE, UPDATE, DELETE)
+    // -------------------------------------------------------------
+    const dishEditorModal = document.getElementById("dish-editor-modal");
+    const dishEditorForm = document.getElementById("dish-editor-form");
+    const dishFileInput = document.getElementById("dish-file-input");
+    const photoDropzone = document.getElementById("crud-photo-dropzone");
+    const editorPhotoPreview = document.getElementById("editor-photo-preview");
+    const editorCompressionBadge = document.getElementById("editor-compression-badge");
+    const editorSaveBtn = document.getElementById("editor-save-btn");
+
+    let editingDishId = null;
+    let editorCurrentImage = "";
+    let editorCurrentDiet = "nonveg";
+    let isUploadingPhoto = false;
+
+    const dietOptBtns = document.querySelectorAll(".crud-diet-opt");
+    dietOptBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        dietOptBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        editorCurrentDiet = btn.dataset.val;
+      });
+    });
+
+    window.openDishEditor = function(dishId = null, defaultCategory = "mandi") {
+      editingDishId = dishId;
+      editorCompressionBadge.style.display = "none";
+      dishFileInput.value = "";
+
+      if (dishId) {
+        const item = MENU_DATA.find(i => i.id === dishId);
+        if (!item) return;
+        document.getElementById("editor-modal-title").textContent = "Edit Dish";
+        document.getElementById("edit-name").value = item.name || "";
+        document.getElementById("edit-price").value = item.price ?? "";
+        document.getElementById("edit-category").value = item.category || "kebabs";
+        document.getElementById("edit-portion").value = item.portion || "";
+        document.getElementById("edit-desc").value = item.desc || "";
+        document.getElementById("edit-tags").value = Array.isArray(item.tags) ? item.tags.join(", ") : "";
+        document.getElementById("edit-bestseller").checked = Boolean(item.bestseller);
+        editorCurrentDiet = item.diet === "veg" ? "veg" : "nonveg";
+        editorCurrentImage = item.image || "";
+      } else {
+        document.getElementById("editor-modal-title").textContent = "Add New Dish";
+        document.getElementById("edit-name").value = "";
+        document.getElementById("edit-price").value = "";
+        document.getElementById("edit-category").value = activeCategory !== "all" ? activeCategory : defaultCategory;
+        document.getElementById("edit-portion").value = "Serves 1 - 2 Persons";
+        document.getElementById("edit-desc").value = "";
+        document.getElementById("edit-tags").value = "Chef Choice";
+        document.getElementById("edit-bestseller").checked = false;
+        editorCurrentDiet = "nonveg";
+        editorCurrentImage = "";
+      }
+
+      dietOptBtns.forEach(b => {
+        b.classList.toggle("active", b.dataset.val === editorCurrentDiet);
+      });
+
+      const removePhotoBtn = document.getElementById("editor-remove-photo-btn");
+      if (editorCurrentImage) {
+        editorPhotoPreview.src = editorCurrentImage;
+        editorPhotoPreview.style.display = "block";
+        if (removePhotoBtn) removePhotoBtn.style.display = "inline-flex";
+      } else {
+        editorPhotoPreview.style.display = "none";
+        if (removePhotoBtn) removePhotoBtn.style.display = "none";
+      }
+
+      dishEditorModal.classList.add("open");
+    };
+
+    document.getElementById("editor-remove-photo-btn")?.addEventListener("click", () => {
+      editorCurrentImage = "";
+      editorPhotoPreview.src = "";
+      editorPhotoPreview.style.display = "none";
+      editorCompressionBadge.style.display = "none";
+      document.getElementById("editor-remove-photo-btn").style.display = "none";
+      dishFileInput.value = "";
+      showToast("Photo cleared — click Save & Publish Live to confirm");
+    });
+
+    function closeDishEditor() {
+      dishEditorModal.classList.remove("open");
+    }
+
+    document.getElementById("editor-close-btn").addEventListener("click", closeDishEditor);
+    dishEditorModal.addEventListener("click", (e) => {
+      if (e.target === dishEditorModal) closeDishEditor();
+    });
+    document.getElementById("admin-add-dish-btn").addEventListener("click", () => openDishEditor(null));
+
+    photoDropzone.addEventListener("click", () => {
+      if (!isUploadingPhoto) dishFileInput.click();
+    });
+
+    dishFileInput.addEventListener("change", async (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+
+      isUploadingPhoto = true;
+      editorSaveBtn.disabled = true;
+      editorSaveBtn.textContent = "Compressing & Uploading Photo...";
+      editorCompressionBadge.style.display = "block";
+      editorCompressionBadge.textContent = "Compressing photo to WebP...";
+
+      try {
+        const compressed = await compressImageToWebP(file);
+        editorPhotoPreview.src = compressed.base64;
+        editorPhotoPreview.style.display = "block";
+        editorCompressionBadge.textContent = `Compressed: ${formatBytes(compressed.originalBytes)} → ${formatBytes(compressed.compressedBytes)} (${compressed.savedPercent}% smaller!) • Uploading...`;
+
+        const uploadedUrl = await uploadCompressedImage(compressed);
+        editorCurrentImage = uploadedUrl;
+        const removeBtn = document.getElementById("editor-remove-photo-btn");
+        if (removeBtn) removeBtn.style.display = "inline-flex";
+        editorCompressionBadge.textContent = `Ready! Compressed ${compressed.savedPercent}% (${formatBytes(compressed.compressedBytes)}) & saved to cloud`;
+        showToast(`Photo compressed (${compressed.savedPercent}% saved)!`, "success");
+      } catch (err) {
+        editorCompressionBadge.textContent = err.message || "Upload failed";
+        showToast(err.message || "Photo upload failed", "error");
+      } finally {
+        isUploadingPhoto = false;
+        editorSaveBtn.disabled = false;
+        editorSaveBtn.textContent = "Save & Publish Live";
+      }
+    });
+
+    // Submit Create or Update
+    dishEditorForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (isUploadingPhoto) return;
+
+      const name = document.getElementById("edit-name").value.trim();
+      const price = Number(document.getElementById("edit-price").value);
+      const category = document.getElementById("edit-category").value;
+      const portion = document.getElementById("edit-portion").value.trim() || "Serves 1 - 2 Persons";
+      const desc = document.getElementById("edit-desc").value.trim();
+      const tags = document.getElementById("edit-tags").value.split(",").map(t => t.trim()).filter(Boolean);
+      const bestseller = document.getElementById("edit-bestseller").checked;
+
+      if (!name || !Number.isFinite(price)) {
+        showToast("Please enter valid dish name and price", "error");
+        return;
+      }
+
+      editorSaveBtn.disabled = true;
+      editorSaveBtn.textContent = "Publishing Live...";
+
+      const backup = JSON.parse(JSON.stringify(MENU_DATA));
+
+      if (editingDishId) {
+        const idx = MENU_DATA.findIndex(i => i.id === editingDishId);
+        if (idx !== -1) {
+          MENU_DATA[idx] = {
+            ...MENU_DATA[idx],
+            name,
+            price: Math.round(price),
+            category,
+            diet: editorCurrentDiet,
+            portion,
+            desc,
+            tags,
+            bestseller,
+            image: editorCurrentImage
+          };
+        }
+      } else {
+        const slugPart = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "").slice(0, 24) || "dish";
+        MENU_DATA.push({
+          id: `tz-${slugPart}-${Date.now().toString(36)}`,
+          name,
+          price: Math.round(price),
+          category,
+          diet: editorCurrentDiet,
+          portion,
+          desc,
+          tags,
+          bestseller,
+          image: editorCurrentImage
+        });
+      }
+
+      const saved = await saveMenuToSupabase();
+      editorSaveBtn.disabled = false;
+      editorSaveBtn.textContent = "Save & Publish Live";
+
+      if (saved) {
+        closeDishEditor();
+        showToast(editingDishId ? "Dish updated live!" : "New dish added live!", "success");
+      } else {
+        MENU_DATA = backup;
+        renderMenu();
+      }
+    });
+
+    // Quick 1-Tap Photo Swap directly from Card
+    const quickPhotoInput = document.getElementById("quick-card-photo-input");
+    let quickSwapDishId = null;
+
+    window.triggerQuickPhotoSwap = function(e, dishId) {
+      e.stopPropagation();
+      quickSwapDishId = dishId;
+      quickPhotoInput.value = "";
+      quickPhotoInput.click();
+    };
+
+    quickPhotoInput.addEventListener("change", async (e) => {
+      const file = e.target.files?.[0];
+      if (!file || !quickSwapDishId) return;
+      const targetId = quickSwapDishId;
+      showToast("Compressing photo (99%) & uploading...");
+
+      try {
+        const compressed = await compressImageToWebP(file);
+        const url = await uploadCompressedImage(compressed);
+        const backup = JSON.parse(JSON.stringify(MENU_DATA));
+        const idx = MENU_DATA.findIndex(i => i.id === targetId);
+        if (idx !== -1) {
+          MENU_DATA[idx] = { ...MENU_DATA[idx], image: url };
+          const ok = await saveMenuToSupabase();
+          if (ok) {
+            showToast(`Photo updated (${compressed.savedPercent}% compressed)!`, "success");
+          } else {
+            MENU_DATA = backup;
+            renderMenu();
+          }
+        }
+      } catch (err) {
+        showToast(err.message || "Quick photo swap failed", "error");
+      }
+    });
+
+    // Delete Dish Modal
+    const deleteModal = document.getElementById("confirm-delete-modal");
+    const deleteLabel = document.getElementById("delete-dish-label");
+    const confirmDeleteBtn = document.getElementById("confirm-delete-btn");
+    let pendingDeleteId = null;
+
+    window.openDeleteConfirm = function(dishId) {
+      const item = MENU_DATA.find(i => i.id === dishId);
+      if (!item) return;
+      pendingDeleteId = dishId;
+      deleteLabel.textContent = `Are you sure you want to permanently remove "${item.name}" from the live menu?`;
+      deleteModal.classList.add("open");
+    };
+
+    function closeDeleteModal() {
+      pendingDeleteId = null;
+      deleteModal.classList.remove("open");
+    }
+
+    document.getElementById("delete-close-btn").addEventListener("click", closeDeleteModal);
+    document.getElementById("cancel-delete-btn").addEventListener("click", closeDeleteModal);
+    deleteModal.addEventListener("click", (e) => {
+      if (e.target === deleteModal) closeDeleteModal();
+    });
+
+    confirmDeleteBtn.addEventListener("click", async () => {
+      if (!pendingDeleteId) return;
+      confirmDeleteBtn.disabled = true;
+      confirmDeleteBtn.textContent = "Deleting...";
+      const backup = JSON.parse(JSON.stringify(MENU_DATA));
+      MENU_DATA = MENU_DATA.filter(i => i.id !== pendingDeleteId);
+
+      const saved = await saveMenuToSupabase();
+      confirmDeleteBtn.disabled = false;
+      confirmDeleteBtn.textContent = "Yes, Delete";
+
+      if (saved) {
+        closeDeleteModal();
+        showToast("Dish deleted from live menu!", "success");
+      } else {
+        MENU_DATA = backup;
+        renderMenu();
+      }
+    });
+
     window.addEventListener("DOMContentLoaded", () => {
       renderMenu();
+      syncMenuFromSupabase();
+
+      // Silently restore owner session if valid token exists in sessionStorage
+      if (adminToken) {
+        fetch("/api/verify-pin", {
+          headers: { "Authorization": `Bearer ${adminToken}` }
+        }).then(r => r.json()).then(d => {
+          if (d?.ok) setAdminMode(true);
+          else {
+            sessionStorage.removeItem("tz_admin_token");
+            adminToken = "";
+          }
+        }).catch(() => {});
+      }
 
       const overlay = document.getElementById("loading-overlay");
       const progressBar = document.getElementById("progress-bar");
       const progressLabel = document.getElementById("progress-label");
 
-      // Collect all images to preload (branding + dedicated QR + all 15 dish photos)
+      // Collect all images to preload (branding + dedicated QR + dish photos)
       const imagesToPreload = [
         "images/turkish_zaika_logo.svg",
         "images/turkish_zaika_qr.png",
-        ...MENU_DATA.map(item => item.image)
+        ...MENU_DATA.map(item => item.image).filter(Boolean)
       ];
 
       let loadedCount = 0;
-      const totalCount = imagesToPreload.length;
+      const totalCount = imagesToPreload.length || 1;
       let hasDismissed = false;
 
       function updateProgress() {
