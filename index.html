@@ -186,21 +186,25 @@
       justify-content: center;
       gap: 10px;
       flex-wrap: wrap;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.2s, opacity 0.2s;
     }
 
-    .linkal-marketing-banner a {
+    .linkal-marketing-banner:hover {
+      background: #142648;
+    }
+
+    .linkal-marketing-banner .banner-cta {
       color: #fbbf24;
       font-weight: 700;
-      text-decoration: none;
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      transition: opacity 0.2s;
     }
 
-    .linkal-marketing-banner a:hover {
+    .linkal-marketing-banner:hover .banner-cta {
       text-decoration: underline;
-      opacity: 0.9;
     }
 
     .badge-pill {
@@ -1173,7 +1177,7 @@
       .linkal-marketing-banner .banner-text {
         font-size: 10.5px;
       }
-      .linkal-marketing-banner a {
+      .linkal-marketing-banner .banner-cta {
         font-size: 10.5px;
       }
 
@@ -1879,16 +1883,16 @@
   </div>
 
   <!-- ==========================================================
-       2. TOP MARKETING BANNER (Linkal Promotional CTA)
+       2. TOP MARKETING BANNER (Linkal Promotional CTA - Full Clickable Box)
        ========================================================== -->
-  <aside class="linkal-marketing-banner">
+  <a href="https://linkal.in" target="_blank" rel="noopener" class="linkal-marketing-banner">
     <span class="badge-pill">Powered by Linkal AI</span>
-    <span class="banner-text">Create your free instant digital menu in 30 seconds</span>
-    <a href="https://linkal.in" target="_blank" rel="noopener">
+    <span class="banner-text">Create your free online menu card in 30 seconds</span>
+    <span class="banner-cta">
       Get your free menu at linkal.in
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
-  </aside>
+    </span>
+  </a>
 
   <!-- ==========================================================
        3. TOP NAVBAR WITH DARK/LIGHT MODE TOGGLE
@@ -2133,7 +2137,7 @@
             <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
           </svg>
           <span>Tap to Pick Photo from Gallery</span>
-          <span style="font-size: 10.5px; opacity: 0.85; font-weight: 500;">Auto-compressed 99% to WebP for instant loading</span>
+          <span style="font-size: 10.5px; opacity: 0.85; font-weight: 500;">Choose from phone gallery or camera</span>
         </div>
       </div>
       <div class="crud-compression-badge" id="editor-compression-badge"></div>
@@ -2155,12 +2159,12 @@
             <input type="number" id="edit-price" class="crud-input" placeholder="e.g. 280" min="0" required>
           </div>
           <div class="crud-form-group">
-            <label class="crud-label">Category *</label>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+              <label class="crud-label" style="margin: 0;">Category (Optional)</label>
+              <button type="button" id="inline-new-cat-btn" style="background: none; border: none; color: #d97706; font-size: 11px; font-weight: 800; cursor: pointer; font-family: inherit;">+ New Category</button>
+            </div>
             <select id="edit-category" class="crud-select">
-              <option value="mandi">Arabian Mandi &amp; Feasts</option>
-              <option value="kebabs">Kebabs, Platters &amp; Seafood</option>
-              <option value="curries">Royal Gravies</option>
-              <option value="desserts">Turkish Desserts</option>
+              <option value="">No Category (All Dishes)</option>
             </select>
           </div>
         </div>
@@ -2224,6 +2228,28 @@
     </div>
   </div>
 
+  <!-- ==========================================================
+       8E. CUSTOM CATEGORIES MANAGER MODAL
+       ========================================================== -->
+  <div class="modal-overlay" id="categories-modal">
+    <div class="modal-content crud-modal-box" style="max-width: 400px;">
+      <button class="modal-close-btn" id="categories-close-btn">&times;</button>
+      <h3 class="crud-header">Manage Categories</h3>
+      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">
+        Add custom categories for your menu. Dishes without a category always appear in All Dishes.
+      </p>
+
+      <form id="add-category-form" style="display: flex; gap: 8px; margin-bottom: 16px;">
+        <input type="text" id="new-category-title" class="crud-input" placeholder="e.g. Starters, Biryani, Drinks" required>
+        <button type="submit" id="add-category-submit" class="admin-bar-btn admin-btn-add-primary" style="white-space: nowrap;">+ Add</button>
+      </form>
+
+      <div id="categories-manager-list" style="display: flex; flex-direction: column; gap: 8px; max-height: 280px; overflow-y: auto;">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
   <!-- Quick Card Image Upload Input -->
   <input type="file" id="quick-card-photo-input" accept="image/*" style="display: none;">
 
@@ -2234,6 +2260,9 @@
       <span>Owner Edit Mode</span>
     </div>
     <div class="admin-bar-actions">
+      <button type="button" class="admin-bar-btn admin-btn-exit" id="admin-manage-cats-btn">
+        Categories
+      </button>
       <button type="button" class="admin-bar-btn admin-btn-add-primary" id="admin-add-dish-btn">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         Add Dish
@@ -2489,6 +2518,25 @@
       return null;
     }
 
+    const DEFAULT_CATEGORIES = [
+      { id: "mandi", title: "Arabian Mandi & Feasts" },
+      { id: "kebabs", title: "Kebabs, Platters & Seafood" },
+      { id: "curries", title: "Royal Gravies" },
+      { id: "desserts", title: "Turkish Desserts" }
+    ];
+
+    function loadCachedCategories() {
+      try {
+        const raw = localStorage.getItem("tz_cached_categories_v1");
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) return parsed;
+        }
+      } catch (e) {}
+      return null;
+    }
+
+    let CATEGORIES_DATA = loadCachedCategories() || JSON.parse(JSON.stringify(DEFAULT_CATEGORIES));
     let MENU_DATA = loadCachedMenu() || JSON.parse(JSON.stringify(DEFAULT_MENU_DATA));
     let isAdminMode = false;
     let adminToken = sessionStorage.getItem("tz_admin_token") || "";
@@ -2525,13 +2573,112 @@
     }
 
     // -------------------------------------------------------------
-    // Render Menu Items (9:16 Cards + Owner Edit Mode)
+    // Render Category Pills & Menu Items (9:16 Cards + Owner Edit Mode)
     // -------------------------------------------------------------
     const menuContainer = document.getElementById("menu-container");
+    const categoryPillsContainer = document.getElementById("category-pills");
+
+    const CATEGORY_SVGS = {
+      mandi: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a9 9 0 0 0-9 9v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a9 9 0 0 0-9-9Z"/><path d="M7 14h10"/></svg>',
+      kebabs: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="2" y1="2" x2="22" y2="22"/><circle cx="7" cy="7" r="3"/><circle cx="12" cy="12" r="3"/><circle cx="17" cy="17" r="3"/></svg>',
+      curries: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M4 11h16a1 1 0 0 1 1 1v2a7 7 0 0 1-7 7h-2a7 7 0 0 1-7-7v-2a1 1 0 0 1 1-1Z"/></svg>',
+      desserts: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4"/><path d="M4 10h16a2 2 0 0 1 2 2v6a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4v-6a2 2 0 0 1 2-2Z"/></svg>',
+      default: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>'
+    };
+
+    function getCategoryIcon(catId) {
+      return CATEGORY_SVGS[catId] || CATEGORY_SVGS.default;
+    }
+
+    function renderCategoryPills() {
+      if (!categoryPillsContainer) return;
+      if (activeCategory !== "all" && !CATEGORIES_DATA.some(c => c.id === activeCategory)) {
+        activeCategory = "all";
+      }
+      let html = `
+        <button class="pill-btn ${activeCategory === 'all' ? 'active' : ''}" data-category="all">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          All Dishes (<span id="all-dishes-count">${MENU_DATA.length}</span>)
+        </button>
+      `;
+      CATEGORIES_DATA.forEach(cat => {
+        html += `
+          <button class="pill-btn ${activeCategory === cat.id ? 'active' : ''}" data-category="${escapeHtml(cat.id)}">
+            ${getCategoryIcon(cat.id)}
+            ${escapeHtml(cat.title)}
+          </button>
+        `;
+      });
+      categoryPillsContainer.innerHTML = html;
+    }
+
+    function buildDishCardHtml(item) {
+      const dietColor = item.diet === "veg" ? "var(--green-veg)" : "var(--red-brand)";
+      const dietLabel = item.diet === "veg" ? "Veg" : "Non-Veg";
+      const safeId = escapeHtml(item.id);
+      const safeName = escapeHtml(item.name);
+      const safePortion = escapeHtml(item.portion || "Serves 1-2");
+      const safeDesc = escapeHtml(item.desc || "");
+      const safeImg = item.image ? escapeHtml(item.image) : getPlaceholderImage(item.name);
+
+      return `
+        <article class="item-card ${isAdminMode ? 'admin-editable' : ''}" data-id="${safeId}" ${!isAdminMode ? `onclick="openItemModal('${safeId}')"` : ''}>
+          <div class="card-media">
+            <img 
+              class="card-img" 
+              src="${safeImg}" 
+              alt="${safeName}" 
+              decoding="async" 
+              onerror="this.onerror=null; this.src='${getPlaceholderImage(item.name)}';"
+            >
+            ${isAdminMode ? `
+              <button type="button" class="admin-photo-edit-btn" onclick="triggerQuickPhotoSwap(event, '${safeId}')" title="Change dish photo from gallery">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                Photo
+              </button>
+            ` : ''}
+            <div class="serving-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              <span>${safePortion}</span>
+            </div>
+            ${item.bestseller ? '<div class="bestseller-badge">Chef Choice</div>' : ''}
+          </div>
+          <div class="card-body">
+            <div class="card-title-row">
+              <div style="display: flex; align-items: center; gap: 7px;">
+                <span class="diet-icon" style="color: ${dietColor};"></span>
+                <h3 class="item-name">${safeName}</h3>
+              </div>
+              <span class="item-price">₹${Number(item.price || 0)}</span>
+            </div>
+            <p class="item-desc">${safeDesc}</p>
+            ${isAdminMode ? `
+              <div class="admin-card-actions">
+                <button type="button" class="admin-action-btn admin-action-edit" onclick="openDishEditor('${safeId}')">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  Edit
+                </button>
+                <button type="button" class="admin-action-btn admin-action-delete" onclick="openDeleteConfirm('${safeId}')">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+                  Delete
+                </button>
+              </div>
+            ` : `
+              <div class="card-footer">
+                <span style="font-weight: 600;">${dietLabel}</span>
+                <span class="tap-hint">
+                  Details
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </span>
+              </div>
+            `}
+          </div>
+        </article>
+      `;
+    }
 
     function renderMenu() {
-      const countEl = document.getElementById("all-dishes-count");
-      if (countEl) countEl.textContent = MENU_DATA.length;
+      renderCategoryPills();
 
       const filtered = MENU_DATA.filter(item => {
         const matchesCategory = (activeCategory === "all") || (item.category === activeCategory);
@@ -2558,30 +2705,9 @@
       }
 
       let html = "";
-      const categories = [
-        { 
-          id: "mandi", 
-          title: "Arabian Mandi & Feasts", 
-          svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a9 9 0 0 0-9 9v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a9 9 0 0 0-9-9Z"/><path d="M7 14h10"/></svg>'
-        },
-        { 
-          id: "kebabs", 
-          title: "Kebabs, Platters & Seafood", 
-          svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="2" y1="2" x2="22" y2="22"/><circle cx="7" cy="7" r="3"/><circle cx="12" cy="12" r="3"/><circle cx="17" cy="17" r="3"/></svg>'
-        },
-        { 
-          id: "curries", 
-          title: "Royal Gravies", 
-          svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M4 11h16a1 1 0 0 1 1 1v2a7 7 0 0 1-7 7h-2a7 7 0 0 1-7-7v-2a1 1 0 0 1 1-1Z"/></svg>'
-        },
-        { 
-          id: "desserts", 
-          title: "Turkish Desserts", 
-          svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4"/><path d="M4 10h16a2 2 0 0 1 2 2v6a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4v-6a2 2 0 0 1 2-2Z"/></svg>'
-        }
-      ];
+      const knownCatIds = new Set(CATEGORIES_DATA.map(c => c.id));
 
-      categories.forEach(cat => {
+      CATEGORIES_DATA.forEach(cat => {
         if (activeCategory !== "all" && activeCategory !== cat.id) return;
         const catItems = filtered.filter(i => i.category === cat.id);
         if (catItems.length === 0 && !isAdminMode) return;
@@ -2589,8 +2715,8 @@
         html += `
           <div class="category-section-title">
             <div class="title-left">
-              ${cat.svg}
-              <span>${cat.title}</span>
+              ${getCategoryIcon(cat.id)}
+              <span>${escapeHtml(cat.title)}</span>
             </div>
             <span class="category-count">${catItems.length} Dishes</span>
           </div>
@@ -2598,82 +2724,51 @@
         `;
 
         catItems.forEach(item => {
-          const dietColor = item.diet === "veg" ? "var(--green-veg)" : "var(--red-brand)";
-          const dietLabel = item.diet === "veg" ? "Veg" : "Non-Veg";
-          const safeId = escapeHtml(item.id);
-          const safeName = escapeHtml(item.name);
-          const safePortion = escapeHtml(item.portion || "Serves 1-2");
-          const safeDesc = escapeHtml(item.desc || "");
-          const safeImg = item.image ? escapeHtml(item.image) : getPlaceholderImage(item.name);
-
-          html += `
-            <article class="item-card ${isAdminMode ? 'admin-editable' : ''}" data-id="${safeId}" ${!isAdminMode ? `onclick="openItemModal('${safeId}')"` : ''}>
-              <div class="card-media">
-                <img 
-                  class="card-img" 
-                  src="${safeImg}" 
-                  alt="${safeName}" 
-                  decoding="async" 
-                  onerror="this.onerror=null; this.src='${getPlaceholderImage(item.name)}';"
-                >
-                ${isAdminMode ? `
-                  <button type="button" class="admin-photo-edit-btn" onclick="triggerQuickPhotoSwap(event, '${safeId}')" title="Change dish photo from gallery">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-                    Photo
-                  </button>
-                ` : ''}
-                <div class="serving-badge">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                  <span>${safePortion}</span>
-                </div>
-                ${item.bestseller ? '<div class="bestseller-badge">Chef Choice</div>' : ''}
-              </div>
-              <div class="card-body">
-                <div class="card-title-row">
-                  <div style="display: flex; align-items: center; gap: 7px;">
-                    <span class="diet-icon" style="color: ${dietColor};"></span>
-                    <h3 class="item-name">${safeName}</h3>
-                  </div>
-                  <span class="item-price">₹${Number(item.price || 0)}</span>
-                </div>
-                <p class="item-desc">${safeDesc}</p>
-                ${isAdminMode ? `
-                  <div class="admin-card-actions">
-                    <button type="button" class="admin-action-btn admin-action-edit" onclick="openDishEditor('${safeId}')">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                      Edit
-                    </button>
-                    <button type="button" class="admin-action-btn admin-action-delete" onclick="openDeleteConfirm('${safeId}')">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
-                      Delete
-                    </button>
-                  </div>
-                ` : `
-                  <div class="card-footer">
-                    <span style="font-weight: 600;">${dietLabel}</span>
-                    <span class="tap-hint">
-                      Details
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    </span>
-                  </div>
-                `}
-              </div>
-            </article>
-          `;
+          html += buildDishCardHtml(item);
         });
 
         if (isAdminMode) {
           html += `
-            <div class="admin-add-card" onclick="openDishEditor(null, '${cat.id}')">
+            <div class="admin-add-card" onclick="openDishEditor(null, '${escapeHtml(cat.id)}')">
               <div class="admin-add-circle">+</div>
               <div style="font-weight: 800; font-size: 13.5px;">Add New Dish</div>
-              <div style="font-size: 11px; color: var(--text-muted);">to ${cat.title}</div>
+              <div style="font-size: 11px; color: var(--text-muted);">to ${escapeHtml(cat.title)}</div>
             </div>
           `;
         }
 
         html += `</div>`;
       });
+
+      // Dishes without any category (shown in All Dishes view)
+      if (activeCategory === "all") {
+        const uncategorizedItems = filtered.filter(i => !i.category || !knownCatIds.has(i.category));
+        if (uncategorizedItems.length > 0 || (isAdminMode && CATEGORIES_DATA.length === 0)) {
+          html += `
+            <div class="category-section-title">
+              <div class="title-left">
+                ${CATEGORY_SVGS.default}
+                <span>Special Menu Items</span>
+              </div>
+              <span class="category-count">${uncategorizedItems.length} Dishes</span>
+            </div>
+            <div class="menu-grid">
+          `;
+          uncategorizedItems.forEach(item => {
+            html += buildDishCardHtml(item);
+          });
+          if (isAdminMode) {
+            html += `
+              <div class="admin-add-card" onclick="openDishEditor(null, '')">
+                <div class="admin-add-circle">+</div>
+                <div style="font-weight: 800; font-size: 13.5px;">Add Dish</div>
+                <div style="font-size: 11px; color: var(--text-muted);">to All Dishes</div>
+              </div>
+            `;
+          }
+          html += `</div>`;
+        }
+      }
 
       menuContainer.innerHTML = html;
     }
@@ -2719,15 +2814,14 @@
       renderMenu();
     });
 
-    const categoryPills = document.querySelectorAll("#category-pills .pill-btn");
-    categoryPills.forEach(btn => {
-      btn.addEventListener("click", () => {
-        categoryPills.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        activeCategory = btn.dataset.category;
+    if (categoryPillsContainer) {
+      categoryPillsContainer.addEventListener("click", (e) => {
+        const btn = e.target.closest(".pill-btn");
+        if (!btn) return;
+        activeCategory = btn.dataset.category || "all";
         renderMenu();
       });
-    });
+    }
 
     const dietButtons = document.querySelectorAll(".diet-btn");
     dietButtons.forEach(btn => {
@@ -2870,11 +2964,15 @@
         const res = await fetch(`/api/menu?t=${Date.now()}`, { cache: "no-store" });
         if (!res.ok) return;
         const data = await res.json();
-        if (data?.ok && Array.isArray(data.menu)) {
-          MENU_DATA = data.menu;
-          try {
-            localStorage.setItem("tz_cached_menu_v1", JSON.stringify(MENU_DATA));
-          } catch (e) {}
+        if (data?.ok) {
+          if (Array.isArray(data.categories)) {
+            CATEGORIES_DATA = data.categories;
+            try { localStorage.setItem("tz_cached_categories_v1", JSON.stringify(CATEGORIES_DATA)); } catch (e) {}
+          }
+          if (Array.isArray(data.menu)) {
+            MENU_DATA = data.menu;
+            try { localStorage.setItem("tz_cached_menu_v1", JSON.stringify(MENU_DATA)); } catch (e) {}
+          }
           renderMenu();
         }
       } catch (err) {
@@ -2894,7 +2992,7 @@
             "Content-Type": "application/json",
             "Authorization": `Bearer ${adminToken}`
           },
-          body: JSON.stringify({ menu: MENU_DATA })
+          body: JSON.stringify({ menu: MENU_DATA, categories: CATEGORIES_DATA })
         });
         const data = await res.json();
         if (res.status === 401) {
@@ -2908,13 +3006,17 @@
           throw new Error(data?.error || "Failed to save changes");
         }
         MENU_DATA = data.menu;
+        if (Array.isArray(data.categories)) {
+          CATEGORIES_DATA = data.categories;
+          try { localStorage.setItem("tz_cached_categories_v1", JSON.stringify(CATEGORIES_DATA)); } catch (e) {}
+        }
         try {
           localStorage.setItem("tz_cached_menu_v1", JSON.stringify(MENU_DATA));
         } catch (e) {}
         renderMenu();
         return true;
       } catch (err) {
-        showToast(err.message || "Error saving to Supabase", "error");
+        showToast(err.message || "Could not save changes", "error");
         return false;
       }
     }
@@ -3179,7 +3281,19 @@
       });
     });
 
-    window.openDishEditor = function(dishId = null, defaultCategory = "mandi") {
+    function populateCategorySelect(selectedCat = "") {
+      const sel = document.getElementById("edit-category");
+      if (!sel) return;
+      let opts = `<option value="">No Category (All Dishes)</option>`;
+      CATEGORIES_DATA.forEach(c => {
+        opts += `<option value="${escapeHtml(c.id)}">${escapeHtml(c.title)}</option>`;
+      });
+      sel.innerHTML = opts;
+      const exists = !selectedCat || CATEGORIES_DATA.some(c => c.id === selectedCat);
+      sel.value = exists ? selectedCat : "";
+    }
+
+    window.openDishEditor = function(dishId = null, defaultCategory = "") {
       editingDishId = dishId;
       editorCompressionBadge.style.display = "none";
       dishFileInput.value = "";
@@ -3190,7 +3304,7 @@
         document.getElementById("editor-modal-title").textContent = "Edit Dish";
         document.getElementById("edit-name").value = item.name || "";
         document.getElementById("edit-price").value = item.price ?? "";
-        document.getElementById("edit-category").value = item.category || "kebabs";
+        populateCategorySelect(item.category || "");
         document.getElementById("edit-portion").value = item.portion || "";
         document.getElementById("edit-desc").value = item.desc || "";
         document.getElementById("edit-tags").value = Array.isArray(item.tags) ? item.tags.join(", ") : "";
@@ -3201,7 +3315,8 @@
         document.getElementById("editor-modal-title").textContent = "Add New Dish";
         document.getElementById("edit-name").value = "";
         document.getElementById("edit-price").value = "";
-        document.getElementById("edit-category").value = activeCategory !== "all" ? activeCategory : defaultCategory;
+        const preCat = defaultCategory !== "" ? defaultCategory : (activeCategory !== "all" ? activeCategory : "");
+        populateCategorySelect(preCat);
         document.getElementById("edit-portion").value = "Serves 1 - 2 Persons";
         document.getElementById("edit-desc").value = "";
         document.getElementById("edit-tags").value = "Chef Choice";
@@ -3257,22 +3372,21 @@
 
       isUploadingPhoto = true;
       editorSaveBtn.disabled = true;
-      editorSaveBtn.textContent = "Compressing & Uploading Photo...";
+      editorSaveBtn.textContent = "Uploading Photo...";
       editorCompressionBadge.style.display = "block";
-      editorCompressionBadge.textContent = "Compressing photo to WebP...";
+      editorCompressionBadge.textContent = "Uploading photo...";
 
       try {
         const compressed = await compressImageToWebP(file);
         editorPhotoPreview.src = compressed.base64;
         editorPhotoPreview.style.display = "block";
-        editorCompressionBadge.textContent = `Compressed: ${formatBytes(compressed.originalBytes)} → ${formatBytes(compressed.compressedBytes)} (${compressed.savedPercent}% smaller!) • Uploading...`;
 
         const uploadedUrl = await uploadCompressedImage(compressed);
         editorCurrentImage = uploadedUrl;
         const removeBtn = document.getElementById("editor-remove-photo-btn");
         if (removeBtn) removeBtn.style.display = "inline-flex";
-        editorCompressionBadge.textContent = `Ready! Compressed ${compressed.savedPercent}% (${formatBytes(compressed.compressedBytes)}) & saved to cloud`;
-        showToast(`Photo compressed (${compressed.savedPercent}% saved)!`, "success");
+        editorCompressionBadge.textContent = "Photo uploaded and ready!";
+        showToast("Photo ready!", "success");
       } catch (err) {
         editorCompressionBadge.textContent = err.message || "Upload failed";
         showToast(err.message || "Photo upload failed", "error");
@@ -3366,7 +3480,7 @@
       const file = e.target.files?.[0];
       if (!file || !quickSwapDishId) return;
       const targetId = quickSwapDishId;
-      showToast("Compressing photo (99%) & uploading...");
+      showToast("Uploading photo...");
 
       try {
         const compressed = await compressImageToWebP(file);
@@ -3377,16 +3491,118 @@
           MENU_DATA[idx] = { ...MENU_DATA[idx], image: url };
           const ok = await saveMenuToSupabase();
           if (ok) {
-            showToast(`Photo updated (${compressed.savedPercent}% compressed)!`, "success");
+            showToast("Photo updated!", "success");
           } else {
             MENU_DATA = backup;
             renderMenu();
           }
         }
       } catch (err) {
-        showToast(err.message || "Quick photo swap failed", "error");
+        showToast(err.message || "Photo upload failed", "error");
       }
     });
+
+    // -------------------------------------------------------------
+    // 15. CUSTOM CATEGORIES MANAGER (Add & Remove Optional Categories)
+    // -------------------------------------------------------------
+    const categoriesModal = document.getElementById("categories-modal");
+    const categoriesListEl = document.getElementById("categories-manager-list");
+    const addCategoryForm = document.getElementById("add-category-form");
+    const newCategoryInput = document.getElementById("new-category-title");
+
+    function renderCategoriesManager() {
+      if (!categoriesListEl) return;
+      if (CATEGORIES_DATA.length === 0) {
+        categoriesListEl.innerHTML = `<p style="font-size: 12.5px; color: var(--text-muted); text-align: center; padding: 14px;">No custom categories yet. Dishes appear in All Dishes.</p>`;
+        return;
+      }
+      categoriesListEl.innerHTML = CATEGORIES_DATA.map(cat => {
+        const count = MENU_DATA.filter(i => i.category === cat.id).length;
+        return `
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border-color); background: var(--bg-surface);">
+            <div>
+              <div style="font-size: 13.5px; font-weight: 700; color: var(--text-primary);">${escapeHtml(cat.title)}</div>
+              <div style="font-size: 11px; color: var(--text-muted);">${count} ${count === 1 ? 'dish' : 'dishes'}</div>
+            </div>
+            <button type="button" class="admin-action-btn admin-action-delete" style="padding: 6px 10px;" onclick="deleteCustomCategory('${escapeHtml(cat.id)}')">
+              Remove
+            </button>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function openCategoriesModal() {
+      newCategoryInput.value = "";
+      renderCategoriesManager();
+      categoriesModal.classList.add("open");
+      setTimeout(() => newCategoryInput.focus(), 100);
+    }
+
+    function closeCategoriesModal() {
+      categoriesModal.classList.remove("open");
+    }
+
+    document.getElementById("admin-manage-cats-btn")?.addEventListener("click", openCategoriesModal);
+    document.getElementById("inline-new-cat-btn")?.addEventListener("click", () => {
+      openCategoriesModal();
+    });
+    document.getElementById("categories-close-btn")?.addEventListener("click", closeCategoriesModal);
+    categoriesModal?.addEventListener("click", (e) => {
+      if (e.target === categoriesModal) closeCategoriesModal();
+    });
+
+    addCategoryForm?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const title = newCategoryInput.value.trim();
+      if (!title) return;
+
+      let slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "").slice(0, 32);
+      if (!slug || slug === "all" || slug === "none") slug = `cat-${Date.now().toString(36)}`;
+      if (CATEGORIES_DATA.some(c => c.id === slug)) {
+        slug = `${slug}-${Date.now().toString(36).slice(-4)}`;
+      }
+
+      const backupCats = JSON.parse(JSON.stringify(CATEGORIES_DATA));
+      CATEGORIES_DATA.push({ id: slug, title });
+
+      const btn = document.getElementById("add-category-submit");
+      btn.disabled = true;
+      btn.textContent = "Saving...";
+      const ok = await saveMenuToSupabase();
+      btn.disabled = false;
+      btn.textContent = "+ Add";
+
+      if (ok) {
+        newCategoryInput.value = "";
+        renderCategoriesManager();
+        populateCategorySelect(slug);
+        showToast(`Category "${title}" added!`, "success");
+      } else {
+        CATEGORIES_DATA = backupCats;
+        renderCategoriesManager();
+      }
+    });
+
+    window.deleteCustomCategory = async function(catId) {
+      const backupCats = JSON.parse(JSON.stringify(CATEGORIES_DATA));
+      const backupMenu = JSON.parse(JSON.stringify(MENU_DATA));
+
+      CATEGORIES_DATA = CATEGORIES_DATA.filter(c => c.id !== catId);
+      // Move any items from the removed category to All Dishes (no category) so no dishes are ever lost!
+      MENU_DATA = MENU_DATA.map(item => item.category === catId ? { ...item, category: "" } : item);
+
+      const ok = await saveMenuToSupabase();
+      if (ok) {
+        renderCategoriesManager();
+        populateCategorySelect("");
+        showToast("Category removed (dishes moved to All Dishes)", "success");
+      } else {
+        CATEGORIES_DATA = backupCats;
+        MENU_DATA = backupMenu;
+        renderCategoriesManager();
+      }
+    };
 
     // Delete Dish Modal
     const deleteModal = document.getElementById("confirm-delete-modal");

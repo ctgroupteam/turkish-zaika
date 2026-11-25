@@ -1,13 +1,47 @@
 const { verifyToken, getBearerToken, readJsonBody } = require('../lib/auth');
 
-const ALLOWED_CATEGORIES = new Set(['mandi', 'kebabs', 'curries', 'desserts']);
 const ALLOWED_DIETS = new Set(['veg', 'nonveg']);
+
+const DEFAULT_CATEGORIES = [
+  { id: 'mandi', title: 'Arabian Mandi & Feasts' },
+  { id: 'kebabs', title: 'Kebabs, Platters & Seafood' },
+  { id: 'curries', title: 'Royal Gravies' },
+  { id: 'desserts', title: 'Turkish Desserts' }
+];
+
+function sanitizeCategorySlug(cat) {
+  if (!cat || typeof cat !== 'string') return '';
+  const cleaned = cat
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9_-]+/g, '-')
+    .replace(/(^-|-$)/g, '')
+    .slice(0, 64);
+  if (cleaned === 'all' || cleaned === 'none' || cleaned === 'uncategorized') return '';
+  return cleaned;
+}
+
+function sanitizeCategories(categories) {
+  if (!Array.isArray(categories)) return null;
+  const seen = new Set();
+  const result = [];
+  for (const c of categories) {
+    const title = String(c?.title || '').trim().slice(0, 80);
+    if (!title) continue;
+    let id = sanitizeCategorySlug(c?.id || title);
+    if (!id) id = `cat-${result.length + 1}`;
+    if (seen.has(id)) continue;
+    seen.add(id);
+    result.push({ id, title });
+  }
+  return result;
+}
 
 function sanitizeMenuItem(item, index) {
   const cleanId = String(item?.id || `tz-dish-${Date.now()}-${index}`)
     .replace(/[^a-zA-Z0-9_-]/g, '')
     .slice(0, 64);
-  const category = ALLOWED_CATEGORIES.has(item?.category) ? item.category : 'kebabs';
+  const category = sanitizeCategorySlug(item?.category);
   const diet = ALLOWED_DIETS.has(item?.diet) ? item.diet : 'nonveg';
   const priceNum = Number(item?.price);
   const price = Number.isFinite(priceNum) && priceNum >= 0 ? Math.round(priceNum) : 0;
@@ -88,9 +122,14 @@ module.exports = async function handler(req, res) {
       const rows = await r.json();
       const row = rows?.[0];
       const menu = Array.isArray(row?.site_data?.restaurantMenu) ? row.site_data.restaurantMenu : null;
+      const categories = Array.isArray(row?.site_data?.restaurantCategories)
+        ? row.site_data.restaurantCategories
+        : DEFAULT_CATEGORIES;
+
       return res.status(200).json({
         ok: true,
         menu,
+        categories,
         updatedAt: row?.updated_at || null
       });
     } catch (err) {
@@ -112,9 +151,9 @@ module.exports = async function handler(req, res) {
       }
 
       const sanitizedMenu = body.menu.map((item, idx) => sanitizeMenuItem(item, idx));
+      const sanitizedCategories = sanitizeCategories(body.categories);
       const now = new Date().toISOString();
 
-      // Load existing row to preserve metadata and detect removed images
       const getRes = await fetch(`${supabaseUrl}/rest/v1/stores?slug=eq.turkishzaika&select=id,site_data`, {
         headers: {
           'apikey': serviceKey,
@@ -127,6 +166,12 @@ module.exports = async function handler(req, res) {
         ? existingRow.site_data.restaurantMenu
         : [];
 
+      const finalCategories = sanitizedCategories !== null
+        ? sanitizedCategories
+        : (Array.isArray(existingRow?.site_data?.restaurantCategories)
+            ? existingRow.site_data.restaurantCategories
+            : DEFAULT_CATEGORIES);
+
       const updatedSiteData = {
         ...(existingRow?.site_data || {
           id: 'site-turkishzaika-solapur',
@@ -137,6 +182,7 @@ module.exports = async function handler(req, res) {
           status: 'live'
         }),
         restaurantMenu: sanitizedMenu,
+        restaurantCategories: finalCategories,
         updatedAt: now
       };
 
@@ -183,12 +229,12 @@ module.exports = async function handler(req, res) {
         }
       }
 
-      // Clean up orphaned uploaded photos asynchronously
       cleanupRemovedImages(supabaseUrl, serviceKey, oldMenu, sanitizedMenu);
 
       return res.status(200).json({
         ok: true,
         menu: sanitizedMenu,
+        categories: finalCategories,
         updatedAt: now
       });
     } catch (err) {
